@@ -1,11 +1,15 @@
 {
   "name": "IM531_ProjectT2",
   "version": "1.0.0",
-  "description": "A project for university built with React.",
+  "description": "A project for university built with React.js.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --content-base public --open"
+    "test": "jest",
+    "start": "node server",
+    "watch": "webpack --watch",
+    "dev": "concurrently --kill-others --prefix \"[{name}]\" --names \"server,webpack\"  \"npm start\" \"npm run watch\" ",
+    "open": "opn http://localhost:3000",
+    "build": "cross-env NODE_ENV=production webpack -p"
   },
   "repository": {
     "type": "git",
@@ -20,21 +24,29 @@
   "homepage": "https://github.com/sa19-sa/IM531_ProjectT2#readme",
   "dependencies": {
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-redux": "^5.0.4",
+    "react-router-dom": "^4.1.1",
+    "redux": "^3.6.0",
+    "redux-logger": "^3.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.2",
     "babel-loader": "^6.4.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
+    "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.1.3",
     "eslint-import-resolver-webpack": "^0.8.1",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-react": "^6.10.3",
+    "jest": "^20.0.3",
+    "react-test-renderer": "^15.5.4",
     "webpack": "^2.4.1",
     "webpack-dev-server": "^2.4.2"
   },
@@ -43,6 +55,9 @@
       "es2015",
       "stage-1",
       "react"
+    ],
+    "plugins": [
+      "transform-decorators-legacy"
     ]
   }
 }
