@@ -29,6 +29,20 @@ module.exports = {
         ],
         loader: 'eslint-loader',
       },
+      {
+        test: /\.css$/,
+        use: [
+                { loader: 'style-loader' },
+                { loader: 'css-loader' },
+        ],
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loader: 'url-loader',
+        options: {
+          limit: 25000,
+        },
+      },
     ],
   },
 };

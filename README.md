@@ -1,15 +1,8 @@
-# IM531_ProjectT2
+# GameFAM
 
 ## Idea
 
-In this project I want to build a realtime application using WebRTC. 
-
-Some ideas and interests are:  
-* Building a videochat with more than two persons.
-* Building a multiplayer game in 2D graphics.
-* Building a personal dashboard with RT-data like weather, traffic, appointments, geolocation/tracking of flights, ...
-
-But I haven't decided yet..
+This project will be about ...
 
 ## Teammembers
 * Sarah Sauseng
