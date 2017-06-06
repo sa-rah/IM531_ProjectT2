@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -12,8 +11,10 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import transitions from 'material-ui/styles/transitions';
 import ListIcon from 'material-ui/svg-icons/action/list';
+import ProfileIcon from 'material-ui/svg-icons/social/person';
 import MediaBar from './components/MediaBar';
 import Lists from './routes/Lists';
+import Profile from './routes/Profile';
 
 const headerHeight = 160;
 const styles = {
@@ -35,6 +36,13 @@ const routes = [
     title: 'Lists',
     component: Lists,
     icon: <ListIcon/>,
+  },
+  {
+    link: '/profile',
+    exact: true,
+    title: 'Profile',
+    component: Profile,
+    icon: <ProfileIcon/>,
   },
 ];
 

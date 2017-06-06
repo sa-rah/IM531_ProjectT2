@@ -57,7 +57,7 @@ export default class MediaBar extends React.Component {
                   iconStyleLeft={this.props.iconStyleLeft} />
           <div style={{ ...styles.headlines, ...this.props.style }}>
             <ListIcon/>
-            <h1 style={{ ...styles.headline, ...styles.h1 }}>Test</h1>
+            <h1 style={{ ...styles.headline, ...styles.h1 }}>GameFAM</h1>
           </div>
         </div>;
   }

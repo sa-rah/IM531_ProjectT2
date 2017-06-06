@@ -6,6 +6,11 @@ export default function reducer(state = {
   theme: defaultTheme,
 }, action) {
   switch (action.type) {
+    case 'LOAD_LISTS': {
+      return {
+        ...state,
+      };
+    }
     default: {
       return state;
     }
