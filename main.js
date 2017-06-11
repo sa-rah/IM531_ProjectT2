@@ -1,6 +1,7 @@
 const { app, BrowserWindow, globalShortcut, shell, Menu } = require('electron');
 const path = require('path');
 const url = require('url');
+const ownExpress = require('./server/ownExpress');
 
 const showDevTools = true;
 
@@ -35,7 +36,6 @@ app.on('ready', () => {
   globalShortcut.register('CommandOrControl+X', () => {
     console.log('CommandOrControl+X is pressed');
   });
-
   const template = [
     {
       label: 'Edit',
@@ -139,3 +139,4 @@ app.on('activate', () => {
 app.on('will-quit', () => {
   globalShortcut.unregisterAll();
 });
+
