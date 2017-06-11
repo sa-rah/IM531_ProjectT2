@@ -15,18 +15,16 @@ const styles = {
   },
 };
 
-const ListCard = ({ name, users }) => (
+const ListCard = ({ name }) => (
     <Paper style={styles.element}>
         <div style={styles.track}>
             {name}
-            {users}
         </div>
     </Paper>
 );
 
 ListCard.propTypes = {
   name: PropTypes.string,
-  users: PropTypes.array,
 };
 
 export default ListCard;

@@ -8,26 +8,28 @@ import ListCard from '../components/ListCard';
 @connect(store => ({
   lists: store.lists,
   empty: store.lists.empty,
+  user: store.user,
 }))
+
 export default class Lists extends React.Component {
   static propTypes = {
-    lists: PropTypes.object,
+    lists: PropTypes.array,
     dispatch: PropTypes.func,
     empty: PropTypes.bool,
+    user: PropTypes.object,
   };
 
   componentWillMount() {
-    this.props.dispatch(loadLists(this.props.lists));
+    this.props.dispatch(loadLists(this.props.user));
   }
 
   render() {
     const lists = this.props.lists;
-    const result = Object.keys(lists).map(e => [lists[e]]);
-    console.log(result);
+    // const result = Object.keys(lists).map(e => [lists[e]]);
     return <div>
       <h3>Your Lists: </h3>
       <ul>
-          {result.map((item, index) => <ListCard {...item} key={index} />) }
+          {lists.map((item, index) => <ListCard {...item} key={index} />) }
       </ul>
         </div>;
   }
