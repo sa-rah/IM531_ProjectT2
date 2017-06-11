@@ -1,8 +1,7 @@
-import lists from './lists';
 import defaultTheme from './theme';
 
 export default function reducer(state = {
-  lists: [...lists],
+  lists: [],
   theme: defaultTheme,
   user: {
     id: '1',
