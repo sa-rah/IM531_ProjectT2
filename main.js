@@ -33,9 +33,9 @@ function createWindow() {
 
 app.on('ready', () => {
   createWindow();
-  globalShortcut.register('CommandOrControl+X', () => {
+  /* globalShortcut.register('CommandOrControl+X', () => {
     console.log('CommandOrControl+X is pressed');
-  });
+  }); */
   const template = [
     {
       label: 'Edit',

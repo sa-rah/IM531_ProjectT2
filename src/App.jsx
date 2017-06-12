@@ -12,9 +12,13 @@ import MenuItem from 'material-ui/MenuItem';
 import transitions from 'material-ui/styles/transitions';
 import ListIcon from 'material-ui/svg-icons/action/list';
 import ProfileIcon from 'material-ui/svg-icons/social/person';
+import GameFamIcon from 'material-ui/svg-icons/social/pages';
 import MediaBar from './components/MediaBar';
 import Lists from './routes/Lists';
 import Profile from './routes/Profile';
+import About from './routes/About';
+
+import { loadUser } from './actions';
 
 const headerHeight = 160;
 const styles = {
@@ -31,7 +35,14 @@ const styles = {
 
 const routes = [
   {
-    link: '/',
+    link: '/about',
+    exact: true,
+    title: 'About',
+    component: About,
+    icon: <GameFamIcon/>,
+  },
+  {
+    link: '/lists',
     exact: true,
     title: 'Lists',
     component: Lists,
@@ -47,8 +58,8 @@ const routes = [
 ];
 
 @connect(store => ({
-  lists: store.lists,
-  theme: store.theme,
+  lists: store.general.lists,
+  theme: store.general.theme,
 }))
 
 export default class App extends React.Component {
@@ -63,9 +74,15 @@ export default class App extends React.Component {
   }
 
   static propTypes = {
-    lists: PropTypes.object,
+    user: PropTypes.object,
+    lists: PropTypes.array,
     theme: PropTypes.object,
+    dispatch: PropTypes.func,
   };
+
+  componentWillMount() {
+    this.props.dispatch(loadUser({ id: '593d15518659b311c26e174e', name: 'test' }));
+  }
 
   toggleDrawer() {
     this.setState({

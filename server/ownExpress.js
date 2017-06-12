@@ -1,4 +1,4 @@
-/* eslint-disable consistent-return */
+/* eslint-disable no-unused-vars */
 const express = require('express');
 const Mongo = require('mongodb');
 const Monk = require('monk');
@@ -12,9 +12,24 @@ app.listen(3005, () => {
   console.log('Server listening on port 3005.');
 });
 
+app.get('/api/login', (req, res) => {
+  console.log(`Login ${req}${res}`);
+  const loggedIn = { user: { loggedIn: true } };
+  res.send(loggedIn);
+});
+
+app.get('/api/user/:id', (req, res) => {
+  const users = mongodb.get('users');
+  const params = req.params;
+  const id = params.id;
+  users.findOne({ _id: id }, {}).then((user) => {
+    res.json(user);
+  });
+});
+
 app.get('/api/user/:id/lists', (req, res) => {
-  const lists = mongodb.get('users');
-  lists.find({}).then((users) => {
+  const docs = mongodb.get('users');
+  docs.find({}).then((users) => {
     res.json(users);
   });
 });
