@@ -12,19 +12,11 @@ const mongodb = Monk('mongodb://game_fam:GameFam321$@gamefam-shard-00-00-qehpm.m
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get('/api/user/:id', (req, res) => {
-  const users = mongodb.get('users');
-  const params = req.params;
-  const id = params.id;
-  users.findOne({ _id: id }, {}).then((user) => {
-    res.json(user);
-  });
-});
-
 app.get('/api/user/:id/lists', (req, res) => {
   const users = mongodb.get('users');
   const params = req.params;
   const id = params.id;
+
   users.findOne({ _id: id }, {}).then((user) => {
     res.json(user.lists);
   });
@@ -35,6 +27,7 @@ app.get('/api/user/:id/list/:list/games', (req, res) => {
   const params = req.params;
   const id = params.id;
   const list = params.list;
+
   users.findOne({ _id: id }, {}).then((user) => {
     const lists = user.lists;
     const gameList = lists.find(item => item.id === list);
@@ -42,13 +35,29 @@ app.get('/api/user/:id/list/:list/games', (req, res) => {
   });
 });
 
+app.post('/api/user/:id/list/add', (req, res) => {
+
+});
+
+app.put('/api/user/:id/list/:list/edit', (req, res) => {
+
+});
+
+app.delete('/api/user/:id/list/:list/delete', (req, res) => {
+
+});
+
+app.post('/api/user/:id/list/:list/games/add', (req, res) => {
+});
+
+app.delete('/api/user/:id/list/:list/games/delete', (req, res) => {
+});
+
 app.post('/api/login', (req, res) => {
   const users = mongodb.get('users');
   const params = req.body;
   const mail = params.mail;
   const pw = params.pw;
-
-  console.log(pw + mail);
 
   let loggedIn = false;
   users.findOne({ mail }, {}).then((user) => {
@@ -63,6 +72,20 @@ app.post('/api/login', (req, res) => {
       res.send(obj);
     }
   });
+});
+
+app.get('/api/user/:id', (req, res) => {
+  const users = mongodb.get('users');
+  const params = req.params;
+  const id = params.id;
+
+  users.findOne({ _id: id }, {}).then((user) => {
+    res.json(user);
+  });
+});
+
+app.post('/api/user/add', (req, res) => {
+
 });
 
 app.listen(3005, () => {

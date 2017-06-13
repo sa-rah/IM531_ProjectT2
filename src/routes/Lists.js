@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { RaisedButton as Button, GridList } from 'material-ui';
+import { RaisedButton as Button } from 'material-ui';
 import { loadLists, loadGamesForList } from '../actions';
 import ListCard from '../components/ListCard';
 import GameCard from '../components/GameCard';
