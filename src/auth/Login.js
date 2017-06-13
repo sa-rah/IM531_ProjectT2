@@ -3,26 +3,53 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { RaisedButton as Button } from 'material-ui';
-import { loginUser } from '../actions';
+import LoginForm from './LoginForm';
+import { loginUser } from './auth_actions';
+
+const styles = {
+
+};
 
 @connect(store => ({
-  user: store.general.user,
+  user: store.user.user,
   loggedIn: store.user.loggedIn,
   theme: store.general.theme,
 }))
 
 export default class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      form_data: {
+        mail: '',
+        pw: '',
+      },
+    };
+
+    this.updateFormData = this.updateFormData.bind(this);
+  }
+
   static propTypes = {
     user: PropTypes.object,
     loggedIn: PropTypes.bool,
+    message: PropTypes.string,
     dispatch: PropTypes.func,
     theme: PropTypes.object,
   };
 
-  sendForm() {
-    this.props.dispatch(loginUser('test'));
+  updateFormData(values) {
+    console.log(values);
+    this.setState(
+      { form_data: {
+        mail: values.mail,
+        pw: values.pw,
+      } });
   }
+
+  sendForm() {
+    this.props.dispatch(loginUser(this.state.form_data));
+  }
+
 
   render() {
     const loggedIn = this.props.loggedIn;
@@ -31,9 +58,12 @@ export default class Login extends React.Component {
       view = <Link to='/'/>;
     } else {
       view = <MuiThemeProvider muiTheme={this.props.theme}>
-        <div>
-        <h2>Login</h2>
-        <Button primary={true} className="login-button" type="Submit" label='Login' onTouchTap={() => this.sendForm()} />
+        <div style={{
+          ...styles.element,
+          backgroundColor: this.props.theme.palette.primary1Color,
+        }}>
+          <h2>Login</h2>
+          <LoginForm sendForm={this.updateFormData}/>
         </div>
       </MuiThemeProvider>;
     }
@@ -41,6 +71,6 @@ export default class Login extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log(this.props.loggedIn);
+    this.sendForm();
   }
 }

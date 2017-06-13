@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
 import ListIcon from 'material-ui/svg-icons/social/pages';
 import transitions from 'material-ui/styles/transitions';
+import { RaisedButton as Button } from 'material-ui';
+import { logoutUser } from '../auth/auth_actions';
 
 const styles = {
   element: {
@@ -42,6 +44,8 @@ export default class MediaBar extends React.Component {
     style: PropTypes.object,
     height: PropTypes.number,
     theme: PropTypes.object.isRequired,
+    dispatch: PropTypes.func,
+    user: PropTypes.object,
   };
 
 
@@ -58,6 +62,7 @@ export default class MediaBar extends React.Component {
           <div style={{ ...styles.headlines, ...this.props.style }}>
             <ListIcon/>
             <h1 style={{ ...styles.headline, ...styles.h1 }}>GameFAM</h1>
+            <Button type="Submit" label='Logout' onTouchTap={() => logoutUser(this.props.user)} />
           </div>
         </div>;
   }
