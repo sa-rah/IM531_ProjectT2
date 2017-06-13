@@ -16,19 +16,3 @@ export function loadLists(user) {
         }),
   };
 }
-
-export function loadUser(userData) {
-  const url = `${$BASE_URL}/api/user/${userData.id}`;
-  return {
-    type: 'LOAD_USER_DATA',
-    payload:
-            fetch(url)
-                .then(response => response.json())
-                .then((data) => {
-                  const user = data;
-                  return {
-                    user,
-                  };
-                }),
-  };
-}

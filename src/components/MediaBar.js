@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import ListIcon from 'material-ui/svg-icons/social/pages';
 import transitions from 'material-ui/styles/transitions';
@@ -37,6 +38,10 @@ const styles = {
   },
 };
 
+@connect(store => ({
+  user: store.user.user_data,
+}))
+
 export default class MediaBar extends React.Component {
   static propTypes = {
     onLeftIconButtonTouchTap: PropTypes.func.isRequired,
@@ -62,7 +67,7 @@ export default class MediaBar extends React.Component {
           <div style={{ ...styles.headlines, ...this.props.style }}>
             <ListIcon/>
             <h1 style={{ ...styles.headline, ...styles.h1 }}>GameFAM</h1>
-            <Button type="Submit" label='Logout' onTouchTap={() => logoutUser(this.props.user)} />
+            <Button type="Submit" label='Logout' onTouchTap={() => this.props.dispatch(logoutUser(this.props.user))} />
           </div>
         </div>;
   }

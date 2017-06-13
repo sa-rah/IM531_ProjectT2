@@ -12,6 +12,7 @@ export default function userReducer(state = {
       return {
         ...state,
         loggedIn: action.payload.loggedIn,
+        user_data: { id: action.payload.id, name: action.payload.name, mail: action.payload.mail },
       };
     }
     case 'LOGIN_REJECTED': {
@@ -20,7 +21,7 @@ export default function userReducer(state = {
         message: 'Login not possible.',
       };
     }
-    case 'LOGOUT_FULFILLED': {
+    case 'LOGOUT': {
       return {
         ...state,
         user_data: action.payload.user_data,

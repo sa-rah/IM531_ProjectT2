@@ -35,9 +35,6 @@ export default class LoginForm extends React.Component {
   render() {
     return (
             <form onSubmit={this.handleSubmit}>
-                <TextField id="name" name="name" type="text" value={this.state.name} onChange={this.handleChange} hintText="Your Name"
-                           errorText="This field is required"
-                           floatingLabelText="Name"/> <br/>
                 <TextField id="mail" name="mail" type="text" value={this.state.mail} onChange={this.handleChange} hintText="Your Email"
                            errorText="This field is required"
                            floatingLabelText="Mail"/> <br/>

@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars,no-underscore-dangle */
 const express = require('express');
 const bodyParser = require('body-parser');
 const Mongo = require('mongodb');
@@ -43,7 +43,13 @@ app.post('/api/login', (req, res) => {
   users.findOne({ mail }, {}).then((user) => {
     if (user.pw === pw) {
       loggedIn = true;
-      res.send(loggedIn);
+      const obj = {
+        login: loggedIn,
+        id: user._id,
+        mail: user.mail,
+        name: user.name,
+      };
+      res.send(obj);
     }
   });
 });

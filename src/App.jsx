@@ -18,8 +18,6 @@ import Lists from './routes/Lists';
 import Profile from './routes/Profile';
 import About from './routes/About';
 
-import { loadUser } from './actions';
-
 const headerHeight = 160;
 const styles = {
   content: {
@@ -80,9 +78,6 @@ export default class App extends React.Component {
     dispatch: PropTypes.func,
   };
 
-  componentWillMount() {
-    this.props.dispatch(loadUser({ id: '593d15518659b311c26e174e', name: 'test' }));
-  }
 
   toggleDrawer() {
     this.setState({
