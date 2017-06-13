@@ -15,7 +15,6 @@ export function loginUser(data) {
             })
                 .then(response => response.json())
                 .then((res) => {
-                  console.log(res);
                   const loggedIn = res.login;
                   const id = res.id;
                   const name = res.name;

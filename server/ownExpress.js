@@ -22,13 +22,24 @@ app.get('/api/user/:id', (req, res) => {
 });
 
 app.get('/api/user/:id/lists', (req, res) => {
-  const docs = mongodb.get('users');
-  docs.find({}).then((users) => {
-    res.json(users);
+  const users = mongodb.get('users');
+  const params = req.params;
+  const id = params.id;
+  users.findOne({ _id: id }, {}).then((user) => {
+    res.json(user.lists);
   });
 });
 
-app.get('/api/user/:id/list/:id/games', (req, res) => {
+app.get('/api/user/:id/list/:list/games', (req, res) => {
+  const users = mongodb.get('users');
+  const params = req.params;
+  const id = params.id;
+  const list = params.list;
+  users.findOne({ _id: id }, {}).then((user) => {
+    const lists = user.lists;
+    const gameList = lists.find(item => item.id === list);
+    res.json(gameList.games);
+  });
 });
 
 app.post('/api/login', (req, res) => {

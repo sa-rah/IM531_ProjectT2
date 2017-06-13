@@ -38,7 +38,6 @@ export default class Login extends React.Component {
   };
 
   updateFormData(values) {
-    console.log(values);
     this.setState(
       { form_data: {
         mail: values.mail,

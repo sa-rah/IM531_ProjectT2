@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
+import { RaisedButton as Button } from 'material-ui';
 
 const styles = {
   element: {
@@ -15,16 +16,31 @@ const styles = {
   },
 };
 
-const ListCard = ({ name }) => (
-    <Paper style={styles.element}>
-        <div style={styles.track}>
-            {name}
-        </div>
-    </Paper>
-);
+export default class ListCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
 
-ListCard.propTypes = {
-  name: PropTypes.string,
-};
+  static propTypes = {
+    name: PropTypes.string,
+    id: PropTypes.string,
+    index: PropTypes.string,
+    loadGames: PropTypes.func,
+  };
 
-export default ListCard;
+  handleClick() {
+    this.props.loadGames(this.props.id);
+  }
+
+  render() {
+    return <div>
+            <Paper style={styles.element} onClick={this.handleClick}>
+                <div style={styles.track}>
+                    {this.props.name}
+                </div>
+            </Paper>
+            <Button type="edit" value="Edit" label="Edit" onTouchTap={console.log('Edit')}/></div>;
+  }
+}
+

@@ -9,10 +9,26 @@ export function loadLists(user) {
         fetch(url)
         .then(response => response.json())
         .then((data) => {
-          const lists = data;
+          const lists = Object.keys(data).map(key => data[key]);
           return {
             lists,
           };
         }),
+  };
+}
+
+export function loadGamesForList(id, user) {
+  const url = `${$BASE_URL}/api/user/${user.id}/list/${id}/games`;
+  return {
+    type: 'LOAD_GAMES_FOR_LIST',
+    payload:
+        fetch(url)
+            .then(response => response.json())
+            .then((data) => {
+              const games = data;
+              return {
+                games,
+              };
+            }),
   };
 }

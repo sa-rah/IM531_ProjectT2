@@ -23,31 +23,24 @@ const styles = {
     fontWeight: 'normal',
   },
 };
+export default class GameCard extends React.Component {
+  static propTypes = {
+    name: PropTypes.string,
+    price: PropTypes.string,
+  };
 
-const GameCard = ({ img, title, price, platform, link }) => (
-    <Paper style={styles.element}>
-        <div style={styles.time}>
-        {price}
-        </div>
-        <div style={styles.track}>
-            {img}
-        <h2 style={styles.trackLine}>
-        {title}
-        </h2>
-        <h3 style={styles.trackLine}>
-        {platform}
-        </h3>
-        <a href={link}></a>
-        </div>
-    </Paper>
-);
+  render() {
+    return (
+        <Paper style={styles.element}>
+            <div style={styles.time}>
+                {this.props.price}
+            </div>
+            <h2 style={styles.trackLine}>
+                {this.props.name}
+            </h2>
+        </Paper>
+    );
+  }
 
-GameCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired,
-  platform: PropTypes.string,
-  link: PropTypes.string,
-  img: PropTypes.instanceOf(Image),
-};
 
-export default GameCard;
+}
