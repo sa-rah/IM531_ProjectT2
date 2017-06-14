@@ -9,7 +9,7 @@ export function loadLists(user) {
         fetch(url)
         .then(response => response.json())
         .then((data) => {
-          const lists = Object.keys(data).map(key => data[key]);
+          const lists = data;
           return {
             lists,
           };
