@@ -58,6 +58,7 @@ export function registerUser(data) {
             .then(response => response.json())
             .then((res) => {
               const loggedIn = res.login;
+              const id = res.id;
               const name = res.name;
               const mail = res.mail;
               const register = res.register;
@@ -66,6 +67,7 @@ export function registerUser(data) {
                 register,
                 mail,
                 name,
+                id,
               };
             }),
   };

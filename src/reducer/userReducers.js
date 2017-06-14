@@ -46,7 +46,7 @@ export default function userReducer(state = {
         ...state,
         loggedIn: action.payload.loggedIn,
         register: action.payload.register,
-        user_data: { name: action.payload.name, mail: action.payload.mail },
+        user_data: { name: action.payload.name, mail: action.payload.mail, id: action.payload.id },
       };
     }
     case 'LOAD_USER_DATA': {

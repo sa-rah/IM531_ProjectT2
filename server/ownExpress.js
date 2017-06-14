@@ -94,16 +94,15 @@ app.get('/api/user/:id', (req, res) => {
 app.post('/api/user/add', (req, res) => {
   const users = mongodb.get('users');
   const params = req.body;
-  console.log(params);
-  const obj = {
-    login: true,
-    register: false,
-    pw: params.pw,
-    mail: params.mail,
-    name: params.name,
-  };
 
-  users.insert(params).then(() => {
+  users.insert(params).then((user) => {
+    const obj = {
+      login: true,
+      register: false,
+      mail: user.mail,
+      name: user.name,
+      id: user._id,
+    };
     res.send(obj);
   });
 });

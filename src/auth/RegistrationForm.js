@@ -20,7 +20,7 @@ const styles = {
 export default class RegistrationForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', mail: '', pw: '' };
+    this.state = { name: '', mail: '', pw: '', lists: [] };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
