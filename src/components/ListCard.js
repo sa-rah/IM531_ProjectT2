@@ -30,7 +30,7 @@ export default class ListCard extends React.Component {
   };
 
   handleClick() {
-    this.props.loadGames(this.props.id);
+    // this.props.loadGames(this.props.id);
   }
 
   render() {
