@@ -35,8 +35,15 @@ app.get('/api/user/:id/list/:list/games', (req, res) => {
   });
 });
 
-app.post('/api/user/:id/list/add', (req, res) => {
-
+app.put('/api/user/:id/list/add', (req, res) => {
+  const users = mongodb.get('users');
+  const params = req.body;
+  const id = params.user.id;
+  const userUpdate = params.list.users;
+  const updateList = params.lists;
+  users.update({ _id: id }, { $set: { lists: updateList } }).then(() => {
+    res.send(false);
+  });
 });
 
 app.put('/api/user/:id/list/:list/edit', (req, res) => {
@@ -85,7 +92,20 @@ app.get('/api/user/:id', (req, res) => {
 });
 
 app.post('/api/user/add', (req, res) => {
+  const users = mongodb.get('users');
+  const params = req.body;
+  console.log(params);
+  const obj = {
+    login: true,
+    register: false,
+    pw: params.pw,
+    mail: params.mail,
+    name: params.name,
+  };
 
+  users.insert(params).then(() => {
+    res.send(obj);
+  });
 });
 
 app.listen(3005, () => {

@@ -5,6 +5,7 @@ export default function userReducer(state = {
     mail: '',
   },
   loggedIn: false,
+  register: false,
   message: '',
 }, action) {
   switch (action.type) {
@@ -26,6 +27,26 @@ export default function userReducer(state = {
         ...state,
         user_data: action.payload.user_data,
         loggedIn: action.payload.loggedIn,
+      };
+    }
+    case 'SHOW_REGISTER_FORM': {
+      return {
+        ...state,
+        register: action.payload.register,
+      };
+    }
+    case 'SHOW_LOGIN_FORM': {
+      return {
+        ...state,
+        register: action.payload.register,
+      };
+    }
+    case 'REGISTER_USER_FULFILLED': {
+      return {
+        ...state,
+        loggedIn: action.payload.loggedIn,
+        register: action.payload.register,
+        user_data: { name: action.payload.name, mail: action.payload.mail },
       };
     }
     case 'LOAD_USER_DATA': {

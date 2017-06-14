@@ -32,3 +32,33 @@ export function loadGamesForList(id, user) {
             }),
   };
 }
+
+export function showAddListForm() {
+  return {
+    type: 'SHOW_ADD_LIST_FORM',
+    payload: { addList: true },
+  };
+}
+
+export function addToList(data) {
+  const url = `${$BASE_URL}/api/user/${data.user.id}/list/add`;
+  return {
+    type: 'ADD_LIST',
+    payload:
+        fetch(url, {
+          method: 'PUT',
+          body: JSON.stringify(data),
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+            .then(response => response.json())
+            .then((res) => {
+              const addList = res;
+              return {
+                addList,
+              };
+            }),
+  };
+}

@@ -29,6 +29,48 @@ export function loginUser(data) {
   };
 }
 
+export function showRegisterForm() {
+  return {
+    type: 'SHOW_REGISTER_FORM',
+    payload: { register: true },
+  };
+}
+
+export function showLoginForm() {
+  return {
+    type: 'SHOW_LOGIN_FORM',
+    payload: { register: false },
+  };
+}
+
+export function registerUser(data) {
+  const url = `${$BASE_URL}/api/user/add`;
+  return {
+    type: 'REGISTER_USER',
+    payload: fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+            .then(response => response.json())
+            .then((res) => {
+              const loggedIn = res.login;
+              const name = res.name;
+              const mail = res.mail;
+              const register = res.register;
+              return {
+                loggedIn,
+                register,
+                mail,
+                name,
+              };
+            }),
+  };
+}
+
 export function logoutUser() {
   return {
     type: 'LOGOUT',
