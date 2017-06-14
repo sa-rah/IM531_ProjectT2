@@ -40,6 +40,13 @@ export function showAddListForm() {
   };
 }
 
+export function showLists() {
+  return {
+    type: 'SHOW_LISTS',
+    payload: { addList: false, displayLists: true },
+  };
+}
+
 export function addToList(data) {
   const url = `${$BASE_URL}/api/user/${data.user.id}/list/add`;
   return {

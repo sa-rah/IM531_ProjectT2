@@ -14,11 +14,29 @@ app.use(bodyParser.json());
 
 app.get('/api/user/:id/lists', (req, res) => {
   const users = mongodb.get('users');
+  const lists = mongodb.get('lists');
   const params = req.params;
   const id = params.id;
 
-  users.findOne({ _id: id }, {}).then((user) => {
-    res.json(user.lists);
+  lists.find({ users: id }).then((userLists) => {
+    res.send(userLists);
+  });
+});
+
+app.put('/api/user/:id/list/add', (req, res) => {
+  const users = mongodb.get('users');
+  const lists = mongodb.get('lists');
+  const params = req.body;
+  const id = params.user.id;
+  const list = params.list;
+  const user = params.user;
+  list.users.push(id);
+
+  lists.insert(list).then((newList) => {
+    user.lists.push(JSON.stringify(newList._id));
+    users.update({ _id: id }, { $set: { lists: user.lists } }).then(() => {
+      res.send(false);
+    });
   });
 });
 
@@ -32,17 +50,6 @@ app.get('/api/user/:id/list/:list/games', (req, res) => {
     const lists = user.lists;
     const gameList = lists.find(item => item.id === list);
     res.json(gameList.games);
-  });
-});
-
-app.put('/api/user/:id/list/add', (req, res) => {
-  const users = mongodb.get('users');
-  const params = req.body;
-  const id = params.user.id;
-  const userUpdate = params.list.users;
-  const updateList = params.lists;
-  users.update({ _id: id }, { $set: { lists: updateList } }).then(() => {
-    res.send(false);
   });
 });
 
@@ -75,6 +82,7 @@ app.post('/api/login', (req, res) => {
         id: user._id,
         mail: user.mail,
         name: user.name,
+        lists: user.lists,
       };
       res.send(obj);
     }
@@ -102,6 +110,7 @@ app.post('/api/user/add', (req, res) => {
       mail: user.mail,
       name: user.name,
       id: user._id,
+      lists: user.lists,
     };
     res.send(obj);
   });

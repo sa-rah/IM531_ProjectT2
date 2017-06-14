@@ -2,9 +2,11 @@ import defaultTheme from '../theme';
 
 export default function reducer(state = {
   lists: [],
-  current_games: [],
+  current_list: {},
   theme: defaultTheme,
-  displayLists: false,
+  displayLists: true,
+  addList: false,
+  editList: false,
 }, action) {
   switch (action.type) {
     case 'LOAD_LISTS': {
@@ -24,6 +26,25 @@ export default function reducer(state = {
         ...state,
         current_games: action.payload.games,
         displayLists: false,
+      };
+    }
+    case 'SHOW_ADD_LIST_FORM': {
+      return {
+        ...state,
+        addList: action.payload.addList,
+      };
+    }
+    case 'SHOW_LISTS': {
+      return {
+        ...state,
+        addList: action.payload.addList,
+        displayLists: action.payload.displayLists,
+      };
+    }
+    case 'ADD_LIST_FULFILLED': {
+      return {
+        ...state,
+        addList: action.payload.addList,
       };
     }
     default: {

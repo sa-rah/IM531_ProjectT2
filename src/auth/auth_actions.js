@@ -19,11 +19,13 @@ export function loginUser(data) {
                   const id = res.id;
                   const name = res.name;
                   const mail = res.mail;
+                  const lists = res.lists;
                   return {
                     loggedIn,
                     id,
                     mail,
                     name,
+                    lists,
                   };
                 }),
   };
@@ -61,6 +63,7 @@ export function registerUser(data) {
               const id = res.id;
               const name = res.name;
               const mail = res.mail;
+              const lists = res.lists;
               const register = res.register;
               return {
                 loggedIn,
@@ -68,6 +71,7 @@ export function registerUser(data) {
                 mail,
                 name,
                 id,
+                lists,
               };
             }),
   };
@@ -81,6 +85,7 @@ export function logoutUser() {
         id: '',
         name: '',
         mail: '',
+        lists: '',
       } },
   };
 }

@@ -3,6 +3,7 @@ export default function userReducer(state = {
     id: '',
     name: '',
     mail: '',
+    lists: [],
   },
   loggedIn: false,
   register: false,
@@ -13,7 +14,7 @@ export default function userReducer(state = {
       return {
         ...state,
         loggedIn: action.payload.loggedIn,
-        user_data: { id: action.payload.id, name: action.payload.name, mail: action.payload.mail },
+        user_data: { id: action.payload.id, name: action.payload.name, mail: action.payload.mail, lists: action.payload.lists },
       };
     }
     case 'LOGIN_REJECTED': {
@@ -46,7 +47,10 @@ export default function userReducer(state = {
         ...state,
         loggedIn: action.payload.loggedIn,
         register: action.payload.register,
-        user_data: { name: action.payload.name, mail: action.payload.mail, id: action.payload.id },
+        user_data: { name: action.payload.name,
+          mail: action.payload.mail,
+          id: action.payload.id,
+          lists: action.payload.lists },
       };
     }
     case 'LOAD_USER_DATA': {
