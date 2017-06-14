@@ -14,7 +14,10 @@ export default function userReducer(state = {
       return {
         ...state,
         loggedIn: action.payload.loggedIn,
-        user_data: { id: action.payload.id, name: action.payload.name, mail: action.payload.mail, lists: action.payload.lists },
+        user_data: { id: action.payload.id,
+          name: action.payload.name,
+          mail: action.payload.mail,
+          lists: action.payload.lists },
       };
     }
     case 'LOGIN_REJECTED': {

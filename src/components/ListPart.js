@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { RaisedButton as Button } from 'material-ui';
-import { loadLists, showAddListForm } from '../actions';
+import { loadLists, showAddListForm, showGames } from '../actions';
 import ListCard from '../components/ListCard';
 import ListForm from '../components/ListForm';
 
@@ -44,9 +44,10 @@ export default class Lists extends React.Component {
   render() {
     const lists = this.props.lists;
     const addList = this.props.addList;
+    const editList = this.props.editList;
     let visual;
-    if (addList) {
-      visual = <ListForm sendForm={this.addToList}/>;
+    if (addList || editList) {
+      visual = <ListForm />;
     } else {
       visual = <div>
                 <h3>Your Lists: </h3>

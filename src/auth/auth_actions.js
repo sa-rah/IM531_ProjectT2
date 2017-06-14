@@ -1,7 +1,7 @@
 const $BASE_URL = 'http://localhost:3005';
 
 export function loginUser(data) {
-  const url = `${$BASE_URL}/api/login`;
+  const url = `${$BASE_URL}/api/user/login`;
   return {
     type: 'LOGIN',
     payload:

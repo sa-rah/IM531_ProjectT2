@@ -40,34 +40,31 @@ app.put('/api/user/:id/list/add', (req, res) => {
   });
 });
 
-app.get('/api/user/:id/list/:list/games', (req, res) => {
-  const users = mongodb.get('users');
+app.put('/api/list/:id/edit', (req, res) => {
+  const lists = mongodb.get('lists');
   const params = req.params;
   const id = params.id;
-  const list = params.list;
+  const data = req.body.list;
 
-  users.findOne({ _id: id }, {}).then((user) => {
-    const lists = user.lists;
-    const gameList = lists.find(item => item.id === list);
-    res.json(gameList.games);
+  lists.update({ _id: id }, { $set: data }).then(() => {
+    res.send(false);
   });
 });
 
-app.put('/api/user/:id/list/:list/edit', (req, res) => {
+app.delete('/api/list/:id/delete', (req, res) => {
+  const users = mongodb.get('users');
+  const lists = mongodb.get('lists');
+  const params = req.params;
+  const id = params.id;
 
+  users.update({ lists: id }, { $set: { 'lists.$': '' } }, { multi: true }).then(() => {
+    lists.remove({ _id: id }, {}).then(() => {
+      res.send(false);
+    });
+  });
 });
 
-app.delete('/api/user/:id/list/:list/delete', (req, res) => {
-
-});
-
-app.post('/api/user/:id/list/:list/games/add', (req, res) => {
-});
-
-app.delete('/api/user/:id/list/:list/games/delete', (req, res) => {
-});
-
-app.post('/api/login', (req, res) => {
+app.post('/api/user/login', (req, res) => {
   const users = mongodb.get('users');
   const params = req.body;
   const mail = params.mail;
@@ -89,16 +86,6 @@ app.post('/api/login', (req, res) => {
   });
 });
 
-app.get('/api/user/:id', (req, res) => {
-  const users = mongodb.get('users');
-  const params = req.params;
-  const id = params.id;
-
-  users.findOne({ _id: id }, {}).then((user) => {
-    res.json(user);
-  });
-});
-
 app.post('/api/user/add', (req, res) => {
   const users = mongodb.get('users');
   const params = req.body;
@@ -113,6 +100,26 @@ app.post('/api/user/add', (req, res) => {
       lists: user.lists,
     };
     res.send(obj);
+  });
+});
+
+app.get('/api/user/:id', (req, res) => {
+  const users = mongodb.get('users');
+  const params = req.params;
+  const id = params.id;
+
+  users.findOne({ _id: id }, {}).then((user) => {
+    res.json(user);
+  });
+});
+
+app.get('/api/lists/:id', (req, res) => {
+  const lists = mongodb.get('lists');
+  const params = req.params;
+  const id = params.id;
+
+  lists.find({ _id: id }).then((list) => {
+    res.send(list);
   });
 });
 
