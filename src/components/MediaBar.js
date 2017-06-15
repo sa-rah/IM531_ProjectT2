@@ -36,6 +36,9 @@ const styles = {
     fontSize: '1.7em',
     color: '#fff',
   },
+  button: {
+    margin: '15px',
+  },
 };
 
 @connect(store => ({
@@ -63,11 +66,12 @@ export default class MediaBar extends React.Component {
     }}>
           <AppBar style={styles.appBar}
                   onLeftIconButtonTouchTap={this.props.onLeftIconButtonTouchTap}
-                  iconStyleLeft={this.props.iconStyleLeft} />
+                  iconStyleLeft={this.props.iconStyleLeft}>
+            <Button type="Submit" label='Logout' style={{ ...styles.button }} onTouchTap={() => this.props.dispatch(logoutUser(this.props.user))} />
+          </AppBar>
           <div style={{ ...styles.headlines, ...this.props.style }}>
             <ListIcon/>
             <h1 style={{ ...styles.headline, ...styles.h1 }}>GameFAM</h1>
-            <Button type="Submit" label='Logout' onTouchTap={() => this.props.dispatch(logoutUser(this.props.user))} />
           </div>
         </div>;
   }

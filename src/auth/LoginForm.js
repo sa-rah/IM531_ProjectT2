@@ -7,7 +7,35 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { loginUser, showRegisterForm } from './auth_actions';
 
 const styles = {
-
+  element: {
+    position: 'fixed',
+    top: 0,
+    width: '100%',
+    boxSizing: 'border-box',
+    zIndex: 10,
+    backgroundColor: '#333e50',
+    bottom: 0,
+  },
+  h2: {
+    fontSize: '1.7em',
+    color: '#fff',
+  },
+  button: {
+    margin: '25px',
+    float: 'left',
+  },
+  formField: {
+    margin: 'auto',
+    width: '60%',
+    maxWidth: '300px',
+    marginTop: '200px',
+  },
+  form: {
+    width: '100%',
+  },
+  field: {
+    width: '100%',
+  },
 };
 
 @connect(store => ({
@@ -61,15 +89,17 @@ export default class LoginForm extends React.Component {
         ...styles.element,
         backgroundColor: this.props.theme.palette.primary1Color,
       }}>
-        <h2>Login</h2>
-        <form onSubmit={this.handleSubmit}>
-          <TextField id="mail" name="mail" type="text" value={this.state.mail} onChange={this.handleChange} hintText="Your Email"
+        <div style={ styles.formField }>
+        <h2 style={ styles.h2 }>Login</h2>
+        <form style={ styles.form } onSubmit={this.handleSubmit}>
+          <TextField style={ styles.field } id="mail" name="mail" type="text" value={this.state.mail} onChange={this.handleChange} hintText="Your Email"
                      floatingLabelText="Mail"/> <br/>
-          <TextField id="pw" name="pw" type="password" value={this.state.pw} onChange={this.handleChange} hintText="Your Password"
+          <TextField style={ styles.field } id="pw" name="pw" type="password" value={this.state.pw} onChange={this.handleChange} hintText="Your Password"
                      floatingLabelText="Password"/> <br/>
-          <Button type="submit" value="Submit" label="Login" />
+          <Button style={styles.button} type="submit" value="Submit" label="Login" />
         </form>
-        <Button type="register" value="register" label="Register" onTouchTap={this.showRegForm}/>
+        <Button style={styles.button} type="register" value="register" label="Register" onTouchTap={this.showRegForm}/>
+      </div>
       </div>
     </MuiThemeProvider>
 

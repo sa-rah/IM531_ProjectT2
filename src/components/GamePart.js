@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { RaisedButton as Button, AutoComplete, TextField, CircularProgress } from 'material-ui';
+import { RaisedButton as Button, TextField, CircularProgress } from 'material-ui';
 import { showLists, asyncLoadUpdatedGamesForList } from '../actions';
 import GameCard from '../components/GameCard';
 
