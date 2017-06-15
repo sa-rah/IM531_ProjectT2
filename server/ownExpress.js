@@ -34,11 +34,8 @@ app.put('/api/user/:id/list/add', (req, res) => {
   const user = params.user;
   list.users.push(id);
 
-  lists.insert(list).then((newList) => {
-    user.lists.push(JSON.stringify(newList._id));
-    users.update({ _id: id }, { $set: { lists: user.lists } }).then(() => {
-      res.send({ addList: false });
-    });
+  lists.insert(list).then(() => {
+    res.send({ addList: false });
   });
 });
 
@@ -51,9 +48,7 @@ app.put('/api/list/:id/edit', (req, res) => {
   const user = req.body.user;
 
   lists.update({ _id: id }, { $set: data }).then(() => {
-    users.find({ _id: user.id }, {}).then(() => {
-      res.send({ editList: false });
-    });
+    res.send({ editList: false });
   });
 });
 
@@ -94,12 +89,8 @@ app.delete('/api/list/:id/delete', (req, res) => {
   const id = params.id;
   const user = req.body;
 
-  users.update({ lists: id }, { $set: { 'lists.$': '' } }, { multi: true }).then(() => {
-    lists.remove({ _id: id }, {}).then(() => {
-      users.find({ _id: user.id }, {}).then(() => {
-        res.send({ editList: false });
-      });
-    });
+  lists.remove({ _id: id }, {}).then(() => {
+    res.send({ editList: false });
   });
 });
 
@@ -122,7 +113,7 @@ app.post('/api/user/login', (req, res) => {
       };
       res.send(obj);
     }
-  });
+  }).catch(error => res.send(error));
 });
 
 app.post('/api/user/add', (req, res) => {
