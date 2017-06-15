@@ -116,11 +116,12 @@ export default class ListForm extends React.Component {
     this.props.dispatch(showLists());
   }
 
-  removeUser(event) {
-    const users = this.state.users;
-    console.log(event);
+  removeUser(item) {
+    const updateUsers = this.state.users;
+    const index = updateUsers.indexOf(item);
+    updateUsers.splice(index, 1);
     this.setState({
-
+      users: updateUsers,
     });
   }
 
@@ -143,12 +144,14 @@ export default class ListForm extends React.Component {
                            floatingLabelText="List Name"/> <br/>
                 <AutoComplete id="user" name="user" dataSource={this.state.dataSource}
                               onUpdateInput={this.onUpdateInput} onNewRequest={this.onSetUser}/>
-                    <ul>
-                        { this.state.users.map((item, index) =>
-                        <li key={index}> {item}</li>) }
-                    </ul>
                 <Button type="submit" value="Submit" label={ this.props.editList ? 'Edit' : 'Add List' } />
             </form>
+          <ul>
+              { this.state.users.map((item, index) =>
+                  <li key={index}> {item}
+                    <Button type="remove" value="remove" label="Remove" id={item} onTouchTap={this.removeUser.bind(this, item)}/>
+                  </li>) }
+          </ul>
             { this.props.editList ? <Button type="delete" value="Delete" label="Delete List" onTouchTap={this.deleteList} /> : null }
         </div>
     );

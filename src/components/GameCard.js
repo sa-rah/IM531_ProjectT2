@@ -45,6 +45,7 @@ export default class GameCard extends React.Component {
     name: PropTypes.string,
     price: PropTypes.string,
     id: PropTypes.string,
+    platform: PropTypes.string,
     dispatch: PropTypes.func,
     current_list: PropTypes.object,
   };
@@ -72,6 +73,7 @@ export default class GameCard extends React.Component {
             <h2 style={styles.trackLine}>
                 {this.props.name}
             </h2>
+          <h3>{this.props.platform}</h3>
         </Paper>
     );
   }

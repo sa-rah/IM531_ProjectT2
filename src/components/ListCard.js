@@ -45,6 +45,7 @@ export default class ListCard extends React.Component {
     displayLists: PropTypes.bool,
     fetching: PropTypes.bool,
     user: PropTypes.object,
+    users: PropTypes.array,
   };
 
   handleClick() {
@@ -61,6 +62,11 @@ export default class ListCard extends React.Component {
                 <div style={styles.track}>
                     {this.props.name}
                 </div>
+              <ul>
+                  {this.props.users.map((item, index) =>
+                      <li key={index}> {item} </li>)
+                  }
+              </ul>
             </Paper>
             <Button type="edit" value="Edit" label="Edit" onTouchTap={this.editList}/>
     </div>;
