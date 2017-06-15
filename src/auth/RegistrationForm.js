@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
-import { RaisedButton as Button } from 'material-ui';
+import { RaisedButton as Button, Paper } from 'material-ui';
+import GameFamIcon from 'material-ui/svg-icons/social/pages';
 import { connect } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { registerUser, showLoginForm } from './auth_actions';
@@ -13,28 +14,44 @@ const styles = {
     width: '100%',
     boxSizing: 'border-box',
     zIndex: 10,
-    backgroundColor: '#333e50',
+    backgroundColor: '#27c79a',
     bottom: 0,
   },
   h2: {
-    fontSize: '1.7em',
+    fontSize: '1.2em',
     color: '#fff',
   },
   button: {
-    margin: '25px',
+    margin: '40px',
     float: 'left',
   },
   formField: {
     margin: 'auto',
     width: '60%',
     maxWidth: '300px',
-    marginTop: '200px',
+    marginTop: '150px',
   },
   form: {
     width: '100%',
   },
   field: {
     width: '100%',
+  },
+  headline: {
+    width: '100%',
+    margin: 'auto',
+    textAlign: 'center',
+    backgroundColor: '#27c79a',
+  },
+  h1: {
+    fontSize: '1.5em',
+    color: '#333e50',
+    paddingBottom: '50px',
+  },
+  icon: {
+    width: '100%',
+    margin: 'auto',
+    marginTop: '50px',
   },
 };
 
@@ -87,6 +104,11 @@ export default class RegistrationForm extends React.Component {
           ...styles.element,
           backgroundColor: this.props.theme.palette.primary1Color,
         }}>
+          <Paper style={ styles.headline } rounded={false}>
+            <GameFamIcon style={ styles.icon }/>
+            <h1 style={ styles.h1 }>Welcome to GameFAM!</h1>
+          </Paper>
+          <Button style={styles.button} type="login" value="login" label="Login" onTouchTap={this.showLogForm}/>
           <div style={ styles.formField }>
             <h2 style={ styles.h2 }>Register</h2>
             <form style={ styles.form } onSubmit={this.handleSubmit}>
@@ -101,7 +123,6 @@ export default class RegistrationForm extends React.Component {
                            floatingLabelText="Password"/> <br/>
                 <Button style={styles.button} type="submit" value="Submit" label="Register" />
             </form>
-            <Button style={styles.button} type="login" value="login" label="Login" onTouchTap={this.showLogForm}/>
           </div>
           </div>
     </MuiThemeProvider>
