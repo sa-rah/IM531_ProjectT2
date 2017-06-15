@@ -185,6 +185,22 @@ export function deleteGameFromList(data) {
   };
 }
 
+export function loadAllUser() {
+  const url = `${$BASE_URL}/api/user/`;
+  return {
+    type: 'LOAD_ALL_USER',
+    payload:
+            fetch(url)
+                .then(response => response.json())
+                .then((data) => {
+                  const users = data;
+                  return {
+                    users,
+                  };
+                }),
+  };
+}
+
 export function asyncAdding(data) {
   return dispatch => new Promise((resolve, reject) => {
     dispatch(addToList(data)).then(() => {

@@ -3,8 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
-import { RaisedButton as Button } from 'material-ui';
-import { showLists, asyncAdding, asyncEditing, asyncDeleting } from '../actions';
+import { RaisedButton as Button, AutoComplete } from 'material-ui';
+import { showLists, asyncAdding, asyncEditing, asyncDeleting, loadAllUser } from '../actions';
 
 @connect(store => ({
   user: store.user.user_data,
@@ -12,17 +12,21 @@ import { showLists, asyncAdding, asyncEditing, asyncDeleting } from '../actions'
   current_list: store.general.current_list,
   editList: store.general.editList,
   fetching: store.general.fetching,
+  users: store.general.users,
 }))
 
 export default class ListForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', users: [], games: [] };
+    this.state = { name: '', users: [], games: [], dataSource: [], inputValue: '' };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.showLists = this.showLists.bind(this);
     this.deleteList = this.deleteList.bind(this);
+    this.onUpdateInput = this.onUpdateInput.bind(this);
+    this.onSetUser = this.onSetUser.bind(this);
+    this.removeUser = this.removeUser.bind(this);
   }
 
   static propTypes = {
@@ -33,9 +37,11 @@ export default class ListForm extends React.Component {
     current_list: PropTypes.object,
     editList: PropTypes.bool,
     fetching: PropTypes.bool,
+    users: PropTypes.array,
   };
 
   componentWillMount() {
+    this.props.dispatch(loadAllUser());
     const currentList = this.props.current_list;
     if (this.props.editList) {
       this.setState({
@@ -44,6 +50,35 @@ export default class ListForm extends React.Component {
         games: currentList.games,
       });
     }
+  }
+
+  onUpdateInput(inputValue) {
+    const self = this;
+    this.setState({
+      inputValue,
+    }, () => {
+      self.performSearch();
+    });
+  }
+
+  performSearch() {
+    if (this.state.inputValue !== '') {
+      const mails = this.props.users.map(user => user.mail);
+      this.setState({
+        dataSource: mails,
+      });
+    }
+  }
+
+  onSetUser(chosenRequest) {
+    const newUsers = this.props.users;
+    const newUser = newUsers.find(user => user.mail === chosenRequest);
+    newUsers.push(newUser);
+    const stateUsers = this.state.users;
+    stateUsers.push(newUser._id);
+    this.setState({
+      users: stateUsers,
+    });
   }
 
   handleChange(event) {
@@ -63,7 +98,11 @@ export default class ListForm extends React.Component {
     const obj = {
       user: this.props.user,
       lists: updateList,
-      list: this.state,
+      list: {
+        name: this.state.name,
+        users: this.state.users,
+        games: this.state.games,
+      },
       id: this.props.current_list._id,
     };
     if (this.props.editList) {
@@ -75,6 +114,14 @@ export default class ListForm extends React.Component {
 
   showLists() {
     this.props.dispatch(showLists());
+  }
+
+  removeUser(event) {
+    const users = this.state.users;
+    console.log(event);
+    this.setState({
+
+    });
   }
 
   deleteList() {
@@ -94,6 +141,12 @@ export default class ListForm extends React.Component {
                 <TextField id="name" name="name" type="text" value={this.state.name} onChange={this.handleChange} hintText="List Name"
                            errorText="This field is required"
                            floatingLabelText="List Name"/> <br/>
+                <AutoComplete id="user" name="user" dataSource={this.state.dataSource}
+                              onUpdateInput={this.onUpdateInput} onNewRequest={this.onSetUser}/>
+                    <ul>
+                        { this.state.users.map((item, index) =>
+                        <li key={index}> {item}</li>) }
+                    </ul>
                 <Button type="submit" value="Submit" label={ this.props.editList ? 'Edit' : 'Add List' } />
             </form>
             { this.props.editList ? <Button type="delete" value="Delete" label="Delete List" onTouchTap={this.deleteList} /> : null }

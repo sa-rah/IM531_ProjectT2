@@ -3,12 +3,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Mongo = require('mongodb');
 const Monk = require('monk');
-// const path = require('path');
+const path = require('path');
+
 const app = express();
-// const publicPath = path.join(__dirname, '..', 'public');
+const publicPath = path.join(__dirname, '..', 'public');
 
 const mongodb = Monk('mongodb://game_fam:GameFam321$@gamefam-shard-00-00-qehpm.mongodb.net:27017,gamefam-shard-00-01-qehpm.mongodb.net:27017,gamefam-shard-00-02-qehpm.mongodb.net:27017/gamefam?ssl=true&replicaSet=gamefam-shard-0&authSource=admin');
 
+app.use(express.static(publicPath));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -146,6 +148,13 @@ app.get('/api/user/:id', (req, res) => {
   const id = params.id;
 
   users.findOne({ _id: id }, {}).then((user) => {
+    res.json(user);
+  });
+});
+
+app.get('/api/user/', (req, res) => {
+  const users = mongodb.get('users');
+  users.find({}, {}).then((user) => {
     res.json(user);
   });
 });

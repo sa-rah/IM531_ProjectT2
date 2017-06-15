@@ -2,6 +2,7 @@ import defaultTheme from '../theme';
 
 export default function reducer(state = {
   lists: [],
+  users: [],
   current_list: {},
   theme: defaultTheme,
   displayLists: true,
@@ -136,6 +137,12 @@ export default function reducer(state = {
       return {
         ...state,
         fetching: false,
+      };
+    }
+    case 'LOAD_ALL_USER_FULFILLED': {
+      return {
+        ...state,
+        users: action.payload.users,
       };
     }
     default: {
