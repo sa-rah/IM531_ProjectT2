@@ -7,6 +7,8 @@ export default function reducer(state = {
   displayLists: true,
   addList: false,
   editList: false,
+  fetching: false,
+  shouldLoadLists: false,
 }, action) {
   switch (action.type) {
     case 'LOAD_LISTS': {
@@ -14,13 +16,19 @@ export default function reducer(state = {
         ...state,
       };
     }
+    case 'LOAD_LISTS_PENDING': {
+      return {
+        ...state,
+        displayLists: true,
+        fetching: true,
+      };
+    }
     case 'LOAD_LISTS_FULFILLED': {
       return {
         ...state,
         lists: action.payload.lists,
         displayLists: true,
-        editList: false,
-        addList: false,
+        fetching: false,
       };
     }
     case 'SHOW_ADD_LIST_FORM': {
@@ -29,9 +37,10 @@ export default function reducer(state = {
         addList: action.payload.addList,
       };
     }
-    case 'SHOW_EDIT_LIST_FORM': {
+    case 'SHOW_EDIT_LIST_FORM_FULFILLED': {
       return {
         ...state,
+        current_list: action.payload.list,
         editList: action.payload.editList,
       };
     }
@@ -39,6 +48,7 @@ export default function reducer(state = {
       return {
         ...state,
         addList: action.payload.addList,
+        editList: action.payload.editList,
         displayLists: action.payload.displayLists,
       };
     }
@@ -52,22 +62,57 @@ export default function reducer(state = {
     case 'ADD_LIST_FULFILLED': {
       return {
         ...state,
+        addList: action.payload.addList,
+        id: action.payload.id,
+        editList: false,
+        fetching: false,
+      };
+    }
+    case 'ADD_LIST_PENDING': {
+      return {
+        ...state,
+        fetching: true,
       };
     }
     case 'EDIT_LIST_FULFILLED': {
       return {
         ...state,
+        addList: false,
+        editList: action.payload.editList,
+        fetching: false,
+      };
+    }
+    case 'EDIT_LIST_PENDING': {
+      return {
+        ...state,
+        fetching: true,
       };
     }
     case 'DELETE_LIST_FULFILLED': {
       return {
         ...state,
+        addList: false,
+        editList: false,
+        fetching: false,
+      };
+    }
+    case 'DELETE_LIST_PENDING': {
+      return {
+        ...state,
+        fetching: true,
+      };
+    }
+    case 'SET_CURRENT_LIST_PENDING': {
+      return {
+        ...state,
+        fetching: true,
       };
     }
     case 'SET_CURRENT_LIST_FULFILLED': {
       return {
         ...state,
         current_list: action.payload.list[0],
+        fetching: false,
       };
     }
     default: {

@@ -24,10 +24,20 @@ export function showAddListForm() {
   };
 }
 
-export function showEditListForm() {
+export function showEditListForm(id) {
+  const url = `${$BASE_URL}/api/lists/${id}`;
   return {
     type: 'SHOW_EDIT_LIST_FORM',
-    payload: { editList: true },
+    payload: fetch(url)
+        .then(response => response.json())
+        .then((res) => {
+          const list = res[0];
+          const editList = true;
+          return {
+            list,
+            editList,
+          };
+        }),
   };
 }
 
@@ -41,7 +51,7 @@ export function showLists() {
 export function showGames() {
   return {
     type: 'SHOW_GAMES_FOR_LIST',
-    payload: { addList: false, displayLists: false },
+    payload: { addList: false, editList: false, displayLists: false },
   };
 }
 
@@ -50,21 +60,21 @@ export function addToList(data) {
   return {
     type: 'ADD_LIST',
     payload:
-        fetch(url, {
-          method: 'PUT',
-          body: JSON.stringify(data),
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-        })
-            .then(response => response.json())
-            .then((res) => {
-              const addList = res;
-              return {
-                addList,
-              };
-            }),
+            fetch(url, {
+              method: 'PUT',
+              body: JSON.stringify(data),
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+            })
+                .then(response => response.json())
+                .then((res) => {
+                  const addList = res.addList;
+                  return {
+                    addList,
+                  };
+                }),
   };
 }
 
@@ -91,14 +101,14 @@ export function editUserList(data) {
   };
 }
 
-export function deleteUserList(id, list) {
-  const url = `${$BASE_URL}/api/list/${id}/delete`;
+export function deleteUserList(data) {
+  const url = `${$BASE_URL}/api/list/${data.id}/delete`;
   return {
     type: 'DELETE_LIST',
     payload:
             fetch(url, {
               method: 'DELETE',
-              body: JSON.stringify(list),
+              body: JSON.stringify(data.user),
               headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
@@ -106,7 +116,7 @@ export function deleteUserList(id, list) {
             })
                 .then(response => response.json())
                 .then((res) => {
-                  const editList = res;
+                  const editList = res.editList;
                   return {
                     editList,
                   };
@@ -127,4 +137,32 @@ export function setCurrentList(id) {
           };
         }),
   };
+}
+
+
+export function asyncAdding(data) {
+  return dispatch => new Promise((resolve, reject) => {
+    dispatch(addToList(data)).then(() => {
+      dispatch(loadLists(data.user));
+    });
+    resolve();
+  });
+}
+
+export function asyncEditing(data) {
+  return dispatch => new Promise((resolve, reject) => {
+    dispatch(editUserList(data)).then(() => {
+      dispatch(loadLists(data.user));
+    });
+    resolve();
+  });
+}
+
+export function asyncDeleting(data) {
+  return dispatch => new Promise((resolve, reject) => {
+    dispatch(deleteUserList(data)).then(() => {
+      dispatch(loadLists(data.user));
+    });
+    resolve();
+  });
 }

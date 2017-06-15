@@ -35,19 +35,23 @@ app.put('/api/user/:id/list/add', (req, res) => {
   lists.insert(list).then((newList) => {
     user.lists.push(JSON.stringify(newList._id));
     users.update({ _id: id }, { $set: { lists: user.lists } }).then(() => {
-      res.send(false);
+      res.send({ addList: false });
     });
   });
 });
 
 app.put('/api/list/:id/edit', (req, res) => {
   const lists = mongodb.get('lists');
+  const users = mongodb.get('users');
   const params = req.params;
   const id = params.id;
   const data = req.body.list;
+  const user = req.body.user;
 
   lists.update({ _id: id }, { $set: data }).then(() => {
-    res.send(false);
+    users.find({ _id: user.id }, {}).then((foundUser) => {
+      res.send({ editList: false });
+    });
   });
 });
 
@@ -56,10 +60,13 @@ app.delete('/api/list/:id/delete', (req, res) => {
   const lists = mongodb.get('lists');
   const params = req.params;
   const id = params.id;
+  const user = req.body;
 
   users.update({ lists: id }, { $set: { 'lists.$': '' } }, { multi: true }).then(() => {
     lists.remove({ _id: id }, {}).then(() => {
-      res.send(false);
+      users.find({ _id: user.id }, {}).then((foundUser) => {
+        res.send({ editList: false });
+      });
     });
   });
 });

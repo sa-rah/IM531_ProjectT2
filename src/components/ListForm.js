@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 import { RaisedButton as Button } from 'material-ui';
-import { showLists, addToList, editUserList, loadLists, deleteUserList } from '../actions';
+import { showLists, asyncAdding, asyncEditing, asyncDeleting } from '../actions';
 
 @connect(store => ({
   user: store.user.user_data,
   lists: store.general.lists,
   current_list: store.general.current_list,
   editList: store.general.editList,
+  fetching: store.general.fetching,
 }))
 
 export default class ListForm extends React.Component {
@@ -31,6 +32,7 @@ export default class ListForm extends React.Component {
     lists: PropTypes.array,
     current_list: PropTypes.object,
     editList: PropTypes.bool,
+    fetching: PropTypes.bool,
   };
 
   componentWillMount() {
@@ -65,20 +67,22 @@ export default class ListForm extends React.Component {
       id: this.props.current_list._id,
     };
     if (this.props.editList) {
-      this.props.dispatch(editUserList(obj));
+      this.props.dispatch(asyncEditing(obj));
     } else {
-      this.props.dispatch(addToList(obj));
+      this.props.dispatch(asyncAdding(obj));
     }
-    this.props.dispatch(loadLists(this.props.user));
   }
 
   showLists() {
-    this.props.dispatch(showLists(this.props));
+    this.props.dispatch(showLists());
   }
 
   deleteList() {
-    this.props.dispatch(deleteUserList(this.props.current_list._id));
-    this.props.dispatch(loadLists(this.props.user));
+    const obj = {
+      user: this.props.user,
+      id: this.props.current_list._id,
+    };
+    this.props.dispatch(asyncDeleting(obj));
   }
 
   render() {

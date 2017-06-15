@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { RaisedButton as Button } from 'material-ui';
+import CircularProgress from 'material-ui/CircularProgress';
 import { loadLists, showAddListForm, showGames } from '../actions';
 import ListCard from '../components/ListCard';
 import ListForm from '../components/ListForm';
@@ -14,6 +15,7 @@ import ListForm from '../components/ListForm';
   displayLists: store.general.displayLists,
   addList: store.general.addList,
   editList: store.general.editList,
+  fetching: store.general.fetching,
 }))
 
 export default class Lists extends React.Component {
@@ -31,10 +33,13 @@ export default class Lists extends React.Component {
     displayLists: PropTypes.bool,
     addList: PropTypes.bool,
     editList: PropTypes.bool,
+    fetching: PropTypes.bool,
   };
 
   componentWillMount() {
-    this.props.dispatch(loadLists(this.props.user));
+    if (!this.props.fetching) {
+      this.props.dispatch(loadLists(this.props.user));
+    }
   }
 
   showAddForm() {
@@ -52,11 +57,14 @@ export default class Lists extends React.Component {
       visual = <div>
                 <h3>Your Lists: </h3>
                 <Button type="add" value="Add" label="Add List" onTouchTap={this.showAddForm}/>
-                <ul>
-                    {lists.map((item, index) =>
-                        <ListCard {...item} key={index}/>)
-                    }
-                </ul>
+                {this.props.fetching ?
+                <div><CircularProgress /></div> :
+                    <ul>
+                        {lists.map((item, index) =>
+                            <ListCard {...item} key={index}/>)
+                        }
+                    </ul>
+                }
             </div>;
     }
 

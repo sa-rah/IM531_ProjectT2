@@ -23,6 +23,8 @@ const styles = {
   displayLists: store.general.displayLists,
   current_list: store.general.current_list,
   editList: store.general.editList,
+  fetching: store.general.fetching,
+  user: store.user.user,
 }))
 
 export default class ListCard extends React.Component {
@@ -41,20 +43,16 @@ export default class ListCard extends React.Component {
     dispatch: PropTypes.func,
     editList: PropTypes.bool,
     displayLists: PropTypes.bool,
+    fetching: PropTypes.bool,
+    user: PropTypes.object,
   };
 
   handleClick() {
-    this.props.dispatch(setCurrentList(this.props._id));
-    this.setState({
-      showGames: true,
-    });
+    this.props.dispatch(showGames());
   }
 
   editList() {
-    this.props.dispatch(setCurrentList(this.props._id));
-    this.setState({
-      editList: true,
-    });
+    this.props.dispatch(showEditListForm(this.props._id));
   }
 
   render() {
@@ -66,12 +64,6 @@ export default class ListCard extends React.Component {
             </Paper>
             <Button type="edit" value="Edit" label="Edit" onTouchTap={this.editList}/>
     </div>;
-  }
-
-  componentWillUpdate() {
-    if (this.state.editList) {
-      this.props.dispatch(showEditListForm(this.props._id));
-    }
   }
 }
 
