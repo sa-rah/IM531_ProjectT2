@@ -1,4 +1,4 @@
-/* eslint-disable import/prefer-default-export */
+/* eslint-disable import/prefer-default-export,no-underscore-dangle */
 const $BASE_URL = 'http://localhost:3005';
 
 export function loadLists(user) {
@@ -139,6 +139,51 @@ export function setCurrentList(id) {
   };
 }
 
+export function addGameToList(data) {
+  const url = `${$BASE_URL}/api/list/${data.list._id}/games/add`;
+  return {
+    type: 'ADD_GAME_TO_LIST',
+    payload:
+            fetch(url, {
+              method: 'PUT',
+              body: JSON.stringify(data),
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+            })
+                .then(response => response.json())
+                .then((res) => {
+                  const addedGame = res.addedGame;
+                  return {
+                    addedGame,
+                  };
+                }),
+  };
+}
+
+export function deleteGameFromList(data) {
+  const url = `${$BASE_URL}/api/list/${data.list._id}/games/delete`;
+  return {
+    type: 'DELETE_GAME_FROM_LIST',
+    payload:
+            fetch(url, {
+              method: 'PUT',
+              body: JSON.stringify(data),
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+            })
+                .then(response => response.json())
+                .then((res) => {
+                  const editGames = res.editGames;
+                  return {
+                    editGames,
+                  };
+                }),
+  };
+}
 
 export function asyncAdding(data) {
   return dispatch => new Promise((resolve, reject) => {
@@ -163,6 +208,31 @@ export function asyncDeleting(data) {
     dispatch(deleteUserList(data)).then(() => {
       dispatch(loadLists(data.user));
     });
+    resolve();
+  });
+}
+
+export function asyncLoadGamesForList(id) {
+  return dispatch => new Promise((resolve, reject) => {
+    dispatch(setCurrentList(id)).then(() => {
+      dispatch(showGames());
+    });
+    resolve();
+  });
+}
+
+export function asyncLoadUpdatedGamesForList(data) {
+  return dispatch => new Promise((resolve, reject) => {
+    if (data.delete) {
+      dispatch(deleteGameFromList(data)).then(() => {
+        dispatch(asyncLoadGamesForList(data.list._id));
+      });
+    } else {
+      console.log(data);
+      dispatch(addGameToList(data)).then(() => {
+        dispatch(asyncLoadGamesForList(data.list._id));
+      });
+    }
     resolve();
   });
 }

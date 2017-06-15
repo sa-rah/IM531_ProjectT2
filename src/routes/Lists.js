@@ -17,6 +17,7 @@ export default class Lists extends React.Component {
   render() {
     const displayLists = this.props.displayLists;
     let visual;
+    console.log(displayLists);
     if (!displayLists) {
       visual = <div>
           <GamePart />

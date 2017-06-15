@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import { connect } from 'react-redux';
 import { RaisedButton as Button } from 'material-ui';
-import { setCurrentList, showEditListForm, showGames } from '../actions';
+import { showEditListForm, asyncLoadGamesForList } from '../actions';
 
 const styles = {
   element: {
@@ -48,7 +48,7 @@ export default class ListCard extends React.Component {
   };
 
   handleClick() {
-    this.props.dispatch(showGames());
+    this.props.dispatch(asyncLoadGamesForList(this.props._id));
   }
 
   editList() {

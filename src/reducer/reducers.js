@@ -8,7 +8,6 @@ export default function reducer(state = {
   addList: false,
   editList: false,
   fetching: false,
-  shouldLoadLists: false,
 }, action) {
   switch (action.type) {
     case 'LOAD_LISTS': {
@@ -112,6 +111,30 @@ export default function reducer(state = {
       return {
         ...state,
         current_list: action.payload.list[0],
+        fetching: false,
+      };
+    }
+    case 'ADD_GAME_TO_LIST_PENDING': {
+      return {
+        ...state,
+        fetching: true,
+      };
+    }
+    case 'ADD_GAME_TO_LIST_FULFILLED': {
+      return {
+        ...state,
+        fetching: false,
+      };
+    }
+    case 'DELETE_GAME_FROM_LIST_PENDING': {
+      return {
+        ...state,
+        fetching: true,
+      };
+    }
+    case 'DELETE_GAME_FROM_LIST_FULFILLED': {
+      return {
+        ...state,
         fetching: false,
       };
     }

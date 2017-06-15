@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { RaisedButton as Button } from 'material-ui';
 import CircularProgress from 'material-ui/CircularProgress';
-import { loadLists, showAddListForm, showGames } from '../actions';
+import { loadLists, showAddListForm } from '../actions';
 import ListCard from '../components/ListCard';
 import ListForm from '../components/ListForm';
 

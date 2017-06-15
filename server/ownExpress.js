@@ -49,9 +49,39 @@ app.put('/api/list/:id/edit', (req, res) => {
   const user = req.body.user;
 
   lists.update({ _id: id }, { $set: data }).then(() => {
-    users.find({ _id: user.id }, {}).then((foundUser) => {
+    users.find({ _id: user.id }, {}).then(() => {
       res.send({ editList: false });
     });
+  });
+});
+
+app.put('/api/list/:id/games/add', (req, res) => {
+  const lists = mongodb.get('lists');
+  const id = Math.random().toString(36).substr(2, 9);
+  const params = req.body;
+  const listId = req.params.id;
+  const game = params.game;
+  const newGames = params.list.games;
+  const newGame = {
+    id,
+    name: game.name,
+    price: game.price,
+    platform: game.platform,
+  };
+  newGames.push(newGame);
+  lists.update({ _id: listId }, { $set: { games: newGames } }).then(() => {
+    res.send(true);
+  });
+});
+
+app.put('/api/list/:id/games/delete', (req, res) => {
+  const lists = mongodb.get('lists');
+  const params = req.body;
+  const listId = req.params.id;
+  const newGames = params.games;
+
+  lists.update({ _id: listId }, { $set: { games: newGames } }).then(() => {
+    res.send(true);
   });
 });
 
@@ -64,7 +94,7 @@ app.delete('/api/list/:id/delete', (req, res) => {
 
   users.update({ lists: id }, { $set: { 'lists.$': '' } }, { multi: true }).then(() => {
     lists.remove({ _id: id }, {}).then(() => {
-      users.find({ _id: user.id }, {}).then((foundUser) => {
+      users.find({ _id: user.id }, {}).then(() => {
         res.send({ editList: false });
       });
     });
