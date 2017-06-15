@@ -4,30 +4,29 @@ export function loginUser(data) {
   const url = `${$BASE_URL}/api/user/login`;
   return {
     type: 'LOGIN',
-    payload:
-            fetch(url, {
-              method: 'POST',
-              body: JSON.stringify(data),
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-              },
-            })
-                .then(response => response.json())
-                .then((res) => {
-                  const loggedIn = res.login;
-                  const id = res.id;
-                  const name = res.name;
-                  const mail = res.mail;
-                  const lists = res.lists;
-                  return {
-                    loggedIn,
-                    id,
-                    mail,
-                    name,
-                    lists,
-                  };
-                }),
+    payload: fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+          .then(response => response.json())
+          .then((res) => {
+            const loggedIn = res.login;
+            const id = res.id;
+            const name = res.name;
+            const mail = res.mail;
+            const lists = res.lists;
+            return {
+              loggedIn,
+              id,
+              mail,
+              name,
+              lists,
+            };
+          }).catch(error => error),
   };
 }
 
@@ -86,6 +85,8 @@ export function logoutUser() {
         name: '',
         mail: '',
         lists: '',
-      } },
+      },
+      message: '',
+    },
   };
 }

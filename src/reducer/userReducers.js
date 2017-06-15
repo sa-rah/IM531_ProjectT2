@@ -11,13 +11,22 @@ export default function userReducer(state = {
 }, action) {
   switch (action.type) {
     case 'LOGIN_FULFILLED': {
+      if (typeof action.payload.loggedIn === 'undefined') {
+        return {
+          ...state,
+          message: 'Login not possible!',
+          loggedIn: false,
+        };
+      }
       return {
         ...state,
         loggedIn: action.payload.loggedIn,
-        user_data: { id: action.payload.id,
+        user_data: {
+          id: action.payload.id,
           name: action.payload.name,
           mail: action.payload.mail,
-          lists: action.payload.lists },
+          lists: action.payload.lists,
+        },
       };
     }
     case 'LOGIN_REJECTED': {
@@ -31,6 +40,7 @@ export default function userReducer(state = {
         ...state,
         user_data: action.payload.user_data,
         loggedIn: action.payload.loggedIn,
+        message: action.payload.message,
       };
     }
     case 'SHOW_REGISTER_FORM': {

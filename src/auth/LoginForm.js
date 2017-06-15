@@ -48,6 +48,9 @@ const styles = {
     color: '#333e50',
     paddingBottom: '50px',
   },
+  h4: {
+    color: '#df8671',
+  },
   icon: {
     width: '100%',
     margin: 'auto',
@@ -60,6 +63,7 @@ const styles = {
   loggedIn: store.user.loggedIn,
   theme: store.general.theme,
   register: store.user.register,
+  message: store.user.message,
 }))
 
 export default class LoginForm extends React.Component {
@@ -78,6 +82,7 @@ export default class LoginForm extends React.Component {
     dispatch: PropTypes.func,
     theme: PropTypes.object,
     register: PropTypes.bool,
+    message: PropTypes.string,
   };
 
   handleChange(event) {
@@ -113,6 +118,7 @@ export default class LoginForm extends React.Component {
         <Button style={styles.button} type="register" value="register" label="Register" onTouchTap={this.showRegForm}/>
         <div style={ styles.formField }>
         <h2 style={ styles.h2 }>Login</h2>
+            { this.props.message ? <h4 style={ styles.h4 }>{ this.props.message }</h4> : null}
         <form style={ styles.form } onSubmit={this.handleSubmit}>
           <TextField style={ styles.field } id="mail" name="mail" type="text" value={this.state.mail} onChange={this.handleChange} hintText="Your Email"
                      floatingLabelText="Mail"/> <br/>
