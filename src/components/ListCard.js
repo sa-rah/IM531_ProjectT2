@@ -3,19 +3,43 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import { connect } from 'react-redux';
-import { RaisedButton as Button } from 'material-ui';
+import { RaisedButton as Button, Avatar } from 'material-ui';
+import ProfileIcon from 'material-ui/svg-icons/social/person';
 import { showEditListForm, asyncLoadGamesForList } from '../actions';
 
 const styles = {
   element: {
-    padding: 10,
+    padding: 25,
+    paddingBottom: 0,
     display: 'flex',
     fontSize: '0.8em',
-    marginBottom: 20,
+    height: '75px',
   },
-  track: {
-    flex: 1,
-    paddingLeft: 20,
+  paper: {
+    width: '100%',
+    padding: 10,
+  },
+  h3: {
+    float: 'left',
+    color: '#27c79a',
+    textTransform: 'lowercase',
+    letterSpacing: '0.1em',
+    fontWeight: '500',
+    marginLeft: '15px',
+    lineHeight: 1.5,
+    fontSize: '1.3em',
+  },
+  list: {
+    float: 'right',
+    marginRight: '15px',
+  },
+  users: {
+    margin: '8px',
+  },
+  button: {
+    background: 'none',
+    boxShadow: 'none',
+    height: '100%',
   },
 };
 
@@ -57,18 +81,20 @@ export default class ListCard extends React.Component {
   }
 
   render() {
-    return <div>
-            <Paper style={styles.element} onClick={this.handleClick}>
-                <div style={styles.track}>
+    return <div style={ styles.element }>
+            <Paper style={styles.paper} onClick={this.handleClick}>
+                <h3 style={styles.h3}>
                     {this.props.name}
-                </div>
-              <ul>
+                </h3>
+              <ul style={ styles.list }>
                   {this.props.users.map((item, index) =>
-                      <li key={index}> {item} </li>)
+                      <Avatar style={ styles.users } icon={<ProfileIcon/>} key={index} />)
                   }
               </ul>
             </Paper>
-            <Button type="edit" value="Edit" label="Edit" onTouchTap={this.editList}/>
+            <Button style={ styles.button } type="edit" value="Edit"
+                    label="Edit"
+                    onTouchTap={this.editList}/>
     </div>;
   }
 }

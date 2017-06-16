@@ -70,6 +70,9 @@ const styles = {
     fill: '#27c79a',
     color: '#27c79a',
   },
+  user: {
+    float: 'left',
+  },
 };
 
 @connect(store => ({
@@ -228,7 +231,7 @@ export default class ListForm extends React.Component {
               <span style={styles.span}>Added User: </span>
               <ul style={ styles.list }>
                   { this.state.users.map((item, index) =>
-                      <li key={index}> {item}
+                      <li key={index}><p style={ styles.user }> {item}</p>
                         <DeleteButton type="remove" value="remove" id={item}
                                       style={ styles.deleteIcon }
                                       iconStyle={ styles.deleteIcon }

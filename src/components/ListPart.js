@@ -29,6 +29,17 @@ const styles = {
     color: '#333e50',
     fontWeight: 'bold',
   },
+  loading: {
+    fill: '#27c79a',
+    color: '#27c79a',
+    textAlign: 'center',
+    margin: 'auto',
+    width: '100%',
+  },
+  list: {
+    paddingLeft: 0,
+    marginTop: 25,
+  },
 };
 
 @connect(store => ({
@@ -90,8 +101,8 @@ export default class Lists extends React.Component {
                         onTouchTap={this.showAddForm}/>
         </Paper>
                 {this.props.fetching ?
-                <div><CircularProgress /></div> :
-                    <ul>
+                <div><CircularProgress style={ styles.loading }/></div> :
+                    <ul style={ styles.list }>
                         {lists.map((item, index) =>
                             <ListCard {...item} key={index}/>)
                         }
