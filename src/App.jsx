@@ -21,7 +21,6 @@ import About from './routes/About';
 const headerHeight = 160;
 const styles = {
   content: {
-    padding: 16,
     maxWidth: 800,
     transition: transitions.easeOut(null, 'padding-left', null),
     marginTop: headerHeight,
@@ -103,11 +102,11 @@ export default class App extends React.Component {
   }
 
   render() {
-    const paddingLeft = (this.state.drawer.docked ? 256 : 0) + 16;
+    const paddingLeft = (this.state.drawer.docked ? 256 : 0);
     document.querySelector('html').style.backgroundColor = '#f5f7f9';
     return <MuiThemeProvider muiTheme={this.props.theme}>
         <Router>
-          <div style={ styles.fullContent }>
+          <div>
             <MediaBar onLeftIconButtonTouchTap={() => this.toggleDrawer()}
                       height={headerHeight}
                       theme={this.props.theme}

@@ -1,12 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { RaisedButton as Button } from 'material-ui';
+import { RaisedButton as Button, Paper } from 'material-ui';
 import CircularProgress from 'material-ui/CircularProgress';
 import { loadLists, showAddListForm } from '../actions';
 import ListCard from '../components/ListCard';
 import ListForm from '../components/ListForm';
 
+const styles = {
+  head: {
+    width: '100%',
+    backgroundColor: '#27c79a',
+    padding: '15px',
+    height: '70px',
+  },
+  button: {
+    float: 'right',
+    backgroundColor: '#333e50',
+  },
+  h3: {
+    float: 'left',
+    lineHeight: 1,
+    margin: 10,
+    textTransform: 'lowercase',
+    letterSpacing: '0.1em',
+  },
+  span: {
+    color: '#333e50',
+    fontWeight: 'bold',
+  },
+};
 
 @connect(store => ({
   lists: store.general.lists,
@@ -16,6 +39,7 @@ import ListForm from '../components/ListForm';
   addList: store.general.addList,
   editList: store.general.editList,
   fetching: store.general.fetching,
+  theme: store.general.theme,
 }))
 
 export default class Lists extends React.Component {
@@ -34,6 +58,7 @@ export default class Lists extends React.Component {
     addList: PropTypes.bool,
     editList: PropTypes.bool,
     fetching: PropTypes.bool,
+    theme: PropTypes.object.isRequired,
   };
 
   componentWillMount() {
@@ -55,8 +80,15 @@ export default class Lists extends React.Component {
       visual = <ListForm />;
     } else {
       visual = <div>
-                <h3>Your Lists: </h3>
-                <Button type="add" value="Add" label="Add List" onTouchTap={this.showAddForm}/>
+        <Paper style={ styles.head } rounded={false} zDepth={1}>
+          <h3 style={ styles.h3 }><span style={ styles.span }>
+              { this.props.user.name }</span>'s Lists: </h3>
+                <Button style={ styles.button }
+                        backgroundColor={ styles.button.backgroundColor }
+                        type="add" value="Add"
+                        label="Add List"
+                        onTouchTap={this.showAddForm}/>
+        </Paper>
                 {this.props.fetching ?
                 <div><CircularProgress /></div> :
                     <ul>

@@ -37,9 +37,12 @@ const styles = {
     color: '#fff',
     textTransform: 'lowercase',
     marginTop: '45px',
+    fontWeight: '300',
   },
   span: {
     color: '#27c79a',
+    letterSpacing: '0.07em',
+    fontWeight: '400',
   },
   button: {
     margin: '15px',
@@ -50,6 +53,7 @@ const styles = {
     width: '50px',
     float: 'left',
     marginTop: '30px',
+    paddingLeft: '16px',
   },
   text: {
     float: 'right',
@@ -85,9 +89,11 @@ export default class MediaBar extends React.Component {
           <AppBar style={styles.appBar}
                   onLeftIconButtonTouchTap={this.props.onLeftIconButtonTouchTap}
                   iconStyleLeft={this.props.iconStyleLeft}>
-            <Button type="Submit" label='Logout' style={{ ...styles.button }} onTouchTap={() => this.props.dispatch(logoutUser(this.props.user))} />
+            <Button type="Submit" label='Logout'
+                    style={{ ...styles.button }}
+                    onTouchTap={() => this.props.dispatch(logoutUser(this.props.user))} />
           </AppBar>
-          <Paper style={{ ...styles.headlines, ...this.props.style }}>
+          <Paper style={{ ...styles.headlines, ...this.props.style }} zDepth={2}>
             <ListIcon style={ styles.icon } />
             <div style={ styles.text }>
             <h1 style={{ ...styles.headline, ...styles.h1 }}>
