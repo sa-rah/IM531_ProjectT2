@@ -18,18 +18,26 @@ const styles = {
     bottom: 0,
   },
   h2: {
-    fontSize: '1.2em',
+    fontSize: '1.4em',
     color: '#fff',
+    fontWeight: '600',
   },
   button: {
-    margin: '40px',
+    width: '100%',
     float: 'left',
+    marginTop: '40px',
+  },
+  buttonLog: {
+    width: '100%',
+    float: 'left',
+    marginTop: '20px',
+    backgroundColor: '#333e50',
   },
   formField: {
     margin: 'auto',
     width: '60%',
     maxWidth: '300px',
-    marginTop: '150px',
+    marginTop: '50px',
   },
   form: {
     width: '100%',
@@ -47,6 +55,11 @@ const styles = {
     fontSize: '1.5em',
     color: '#333e50',
     paddingBottom: '50px',
+    textTransform: 'lowercase',
+  },
+  span: {
+    color: '#fff',
+    letterSpacing: '0.1em',
   },
   icon: {
     width: '50px',
@@ -107,9 +120,8 @@ export default class RegistrationForm extends React.Component {
         }}>
           <Paper style={ styles.headline } rounded={false}>
             <GameFamIcon style={ styles.icon }/>
-            <h1 style={ styles.h1 }>Welcome to gamefam!</h1>
+            <h1 style={ styles.h1 }>Welcome to <span style={ styles.span }>gamefam</span> !</h1>
           </Paper>
-          <Button style={styles.button} type="login" value="login" label="Login" onTouchTap={this.showLogForm}/>
           <div style={ styles.formField }>
             <h2 style={ styles.h2 }>Register</h2>
             <form style={ styles.form } onSubmit={this.handleSubmit}>
@@ -124,6 +136,9 @@ export default class RegistrationForm extends React.Component {
                            floatingLabelText="Password"/> <br/>
                 <Button style={styles.button} type="submit" value="Submit" label="Register" />
             </form>
+            <Button style={styles.buttonLog}
+                    backgroundColor={ styles.buttonLog.backgroundColor }
+                    type="login" value="login" label="Login" onTouchTap={this.showLogForm}/>
           </div>
           </div>
     </MuiThemeProvider>

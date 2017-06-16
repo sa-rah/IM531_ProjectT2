@@ -70,7 +70,7 @@ const styles = {
     color: '#27c79a',
   },
   buttonAdd: {
-    marginTop: '30px',
+    margin: '30px 0',
     textAlign: 'center',
     width: '100%',
     float: 'left',

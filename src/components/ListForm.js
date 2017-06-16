@@ -56,6 +56,7 @@ const styles = {
     margin: '20px',
     textAlign: 'center',
     float: 'left',
+    width: '100%',
   },
   list: {
     listStyle: 'none',
