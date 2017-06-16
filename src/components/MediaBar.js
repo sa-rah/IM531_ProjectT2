@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import ListIcon from 'material-ui/svg-icons/social/pages';
 import transitions from 'material-ui/styles/transitions';
-import { RaisedButton as Button } from 'material-ui';
+import { RaisedButton as Button, Paper } from 'material-ui';
 import { logoutUser } from '../auth/auth_actions';
 
 const styles = {
@@ -35,9 +35,27 @@ const styles = {
   h1: {
     fontSize: '1.7em',
     color: '#fff',
+    textTransform: 'lowercase',
+    marginTop: '45px',
+  },
+  span: {
+    color: '#27c79a',
   },
   button: {
     margin: '15px',
+    marginRight: 0,
+  },
+  icon: {
+    height: '50px',
+    width: '50px',
+    float: 'left',
+    marginTop: '30px',
+  },
+  text: {
+    float: 'right',
+    height: '80px',
+    bottom: 0,
+    textAlign: 'right',
   },
 };
 
@@ -69,10 +87,13 @@ export default class MediaBar extends React.Component {
                   iconStyleLeft={this.props.iconStyleLeft}>
             <Button type="Submit" label='Logout' style={{ ...styles.button }} onTouchTap={() => this.props.dispatch(logoutUser(this.props.user))} />
           </AppBar>
-          <div style={{ ...styles.headlines, ...this.props.style }}>
-            <ListIcon/>
-            <h1 style={{ ...styles.headline, ...styles.h1 }}>GameFAM</h1>
-          </div>
+          <Paper style={{ ...styles.headlines, ...this.props.style }}>
+            <ListIcon style={ styles.icon } />
+            <div style={ styles.text }>
+            <h1 style={{ ...styles.headline, ...styles.h1 }}>
+              Hello <span style={ styles.span }>{ this.props.user.name }</span> !</h1>
+            </div>
+          </Paper>
         </div>;
   }
 }

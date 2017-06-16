@@ -49,7 +49,8 @@ const styles = {
     paddingBottom: '50px',
   },
   icon: {
-    width: '100%',
+    width: '50px',
+    height: '50px',
     margin: 'auto',
     marginTop: '50px',
   },
@@ -106,7 +107,7 @@ export default class RegistrationForm extends React.Component {
         }}>
           <Paper style={ styles.headline } rounded={false}>
             <GameFamIcon style={ styles.icon }/>
-            <h1 style={ styles.h1 }>Welcome to GameFAM!</h1>
+            <h1 style={ styles.h1 }>Welcome to gamefam!</h1>
           </Paper>
           <Button style={styles.button} type="login" value="login" label="Login" onTouchTap={this.showLogForm}/>
           <div style={ styles.formField }>

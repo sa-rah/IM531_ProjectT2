@@ -29,6 +29,9 @@ const styles = {
   menuLink: {
     textDecoration: 'none',
   },
+  menuItem: {
+    fill: '#27c79a',
+  },
 };
 
 const routes = [
@@ -37,21 +40,21 @@ const routes = [
     exact: true,
     title: 'About',
     component: About,
-    icon: <GameFamIcon/>,
+    icon: <GameFamIcon style={ styles.menuItem } />,
   },
   {
     link: '/lists',
     exact: true,
     title: 'Lists',
     component: Lists,
-    icon: <ListIcon/>,
+    icon: <ListIcon style={ styles.menuItem } />,
   },
   {
     link: '/profile',
     exact: true,
     title: 'Profile',
     component: Profile,
-    icon: <ProfileIcon/>,
+    icon: <ProfileIcon style={ styles.menuItem } />,
   },
 ];
 
@@ -101,9 +104,10 @@ export default class App extends React.Component {
 
   render() {
     const paddingLeft = (this.state.drawer.docked ? 256 : 0) + 16;
+    document.querySelector('html').style.backgroundColor = '#f5f7f9';
     return <MuiThemeProvider muiTheme={this.props.theme}>
         <Router>
-          <div>
+          <div style={ styles.fullContent }>
             <MediaBar onLeftIconButtonTouchTap={() => this.toggleDrawer()}
                       height={headerHeight}
                       theme={this.props.theme}
