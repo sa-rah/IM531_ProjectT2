@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { RaisedButton as Button, TextField, CircularProgress, Paper } from 'material-ui';
+import { RaisedButton as Button, TextField, CircularProgress, Paper, GridList, GridTile } from 'material-ui';
 import { showLists, asyncLoadUpdatedGamesForList } from '../actions';
 import GameCard from '../components/GameCard';
 
@@ -52,6 +52,9 @@ const styles = {
     margin: 'auto',
     width: '300px',
   },
+  games: {
+    padding: 25,
+  },
   innerForm: {
     padding: '20px',
     color: '#333e50',
@@ -80,6 +83,9 @@ const styles = {
     color: '#fff',
     fontSize: '1em',
     fontWeight: '600',
+  },
+  tile: {
+
   },
 };
 
@@ -146,6 +152,18 @@ export default class Lists extends React.Component {
         <h3 style={ styles.h3 }><span style={ styles.span }>{ name }</span> - Games
         </h3>
       </Paper>
+      <div style={ styles.games }>
+          {this.props.fetching ?
+              <div ><CircularProgress style={ styles.loading }/></div> :
+              <GridList style={ styles.list }>
+                  {games.map((item, index) =>
+                    <GridTile style={ styles.tile } key={index} >
+                        <GameCard {...item} key={index}/>
+                    </GridTile>)
+                  }
+              </GridList>
+          }
+      </div>
       <div style={ styles.form }>
         <form onSubmit={this.handleSubmit} style={ styles.innerForm }>
           <span style={ styles.spanForm }>Name</span>
@@ -180,16 +198,6 @@ export default class Lists extends React.Component {
           <Button type="submit" value="Submit"
                   style={ styles.buttonAdd } label='Add' />
         </form>
-      </div>
-      <div>
-        {this.props.fetching ?
-            <div><CircularProgress style={ styles.loading }/></div> :
-            <ul>
-                {games.map((item, index) =>
-                    <GameCard {...item} key={index}/>)
-                }
-            </ul>
-        }
       </div>
     </div>;
 

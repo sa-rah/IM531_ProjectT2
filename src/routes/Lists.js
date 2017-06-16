@@ -18,11 +18,11 @@ export default class Lists extends React.Component {
     const displayLists = this.props.displayLists;
     let visual;
     if (!displayLists) {
-      visual = <div>
+      visual = <div style={ { width: '100%' } }>
           <GamePart />
         </div>;
     } else {
-      visual = <div>
+      visual = <div style={ { width: '100%' } }>
           <ListPart />
         </div>;
     }
