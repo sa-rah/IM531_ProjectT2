@@ -11,7 +11,7 @@ const styles = {
   head: {
     width: '100%',
     backgroundColor: '#27c79a',
-    padding: '15px',
+    padding: '16px',
     height: '70px',
   },
   button: {
