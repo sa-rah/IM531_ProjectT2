@@ -51,12 +51,19 @@ const styles = {
     borderColor: '#333e50',
   },
   buttonAdd: {
-    marginTop: '50px',
     backgroundColor: '#333e50',
-    margin: '20px',
+    margin: 0,
     textAlign: 'center',
     float: 'left',
     width: '100%',
+  },
+  buttonEdit: {
+    backgroundColor: '#333e50',
+    margin: 0,
+    textAlign: 'center',
+    float: 'left',
+    width: '100%',
+    marginTop: '10px',
   },
   list: {
     listStyle: 'none',
@@ -247,7 +254,7 @@ export default class ListForm extends React.Component {
                     label={ this.props.editList ? 'Edit' : 'Add List' }
                     onTouchTap={this.handleSubmit}/>
               { this.props.editList ? <Button type="delete" value="Delete"
-                                                    style={ styles.buttonAdd }
+                                                    style={ styles.buttonEdit }
                                                     label="Delete List"
                                                     onTouchTap={this.deleteList} /> : null }
           </div>

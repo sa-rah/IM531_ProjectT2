@@ -53,12 +53,14 @@ export default function userReducer(state = {
       return {
         ...state,
         register: action.payload.register,
+        message: '',
       };
     }
     case 'SHOW_LOGIN_FORM': {
       return {
         ...state,
         register: action.payload.register,
+        message: '',
       };
     }
     case 'REGISTER_USER_FULFILLED': {
