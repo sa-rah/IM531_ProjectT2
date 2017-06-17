@@ -43,6 +43,12 @@ export default function userReducer(state = {
         message: action.payload.message,
       };
     }
+    case 'SET_ERROR_MESSAGE': {
+      return {
+        ...state,
+        message: action.payload.message,
+      };
+    }
     case 'SHOW_REGISTER_FORM': {
       return {
         ...state,
@@ -56,6 +62,14 @@ export default function userReducer(state = {
       };
     }
     case 'REGISTER_USER_FULFILLED': {
+      if (typeof action.payload.register === 'undefined') {
+        return {
+          ...state,
+          message: 'Registration not possible!',
+          loggedIn: false,
+          register: false,
+        };
+      }
       return {
         ...state,
         loggedIn: action.payload.loggedIn,

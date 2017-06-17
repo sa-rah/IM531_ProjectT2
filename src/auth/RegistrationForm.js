@@ -5,7 +5,7 @@ import { RaisedButton as Button, Paper } from 'material-ui';
 import GameFamIcon from 'material-ui/svg-icons/social/pages';
 import { connect } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { registerUser, showLoginForm } from './auth_actions';
+import { registerUser, showLoginForm, setErrorMessage } from './auth_actions';
 
 const styles = {
   element: {
@@ -21,6 +21,9 @@ const styles = {
     fontSize: '1.4em',
     color: '#fff',
     fontWeight: '600',
+  },
+  h4: {
+    color: '#df8671',
   },
   button: {
     width: '100%',
@@ -74,6 +77,7 @@ const styles = {
   loggedIn: store.user.loggedIn,
   theme: store.general.theme,
   register: store.user.register,
+  message: store.user.message,
 }))
 
 export default class RegistrationForm extends React.Component {
@@ -90,6 +94,7 @@ export default class RegistrationForm extends React.Component {
     dispatch: PropTypes.func,
     theme: PropTypes.object,
     register: PropTypes.bool,
+    message: PropTypes.string,
   };
 
   handleChange(event) {
@@ -104,7 +109,16 @@ export default class RegistrationForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.dispatch(registerUser(this.state));
+    let correctInput = false;
+    const mailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    correctInput = mailRegex.test(this.state.mail);
+
+    if (correctInput) {
+      this.props.dispatch(registerUser(this.state));
+    } else {
+      const msg = 'Mail is not valid.';
+      this.props.dispatch(setErrorMessage(msg));
+    }
   }
 
   showLogForm() {
@@ -124,6 +138,7 @@ export default class RegistrationForm extends React.Component {
           </Paper>
           <div style={ styles.formField }>
             <h2 style={ styles.h2 }>Register</h2>
+              { this.props.message ? <h4 style={ styles.h4 }>{ this.props.message }</h4> : null}
             <form style={ styles.form } onSubmit={this.handleSubmit}>
               <TextField style={ styles.field } id="name" name="name" type="text" value={this.state.name} onChange={this.handleChange} hintText="Your Name"
                          errorText="This field is required"

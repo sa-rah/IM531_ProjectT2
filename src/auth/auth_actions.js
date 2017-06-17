@@ -30,6 +30,13 @@ export function loginUser(data) {
   };
 }
 
+export function setErrorMessage(msg) {
+  return {
+    type: 'SET_ERROR_MESSAGE',
+    payload: { message: msg },
+  };
+}
+
 export function showRegisterForm() {
   return {
     type: 'SHOW_REGISTER_FORM',
@@ -72,7 +79,7 @@ export function registerUser(data) {
                 id,
                 lists,
               };
-            }),
+            }).catch(error => error),
   };
 }
 
