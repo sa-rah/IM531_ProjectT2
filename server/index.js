@@ -1,18 +1,41 @@
 /* eslint-disable no-unused-vars,no-underscore-dangle */
 const express = require('express');
 const bodyParser = require('body-parser');
+const logger = require('morgan');
 const Mongo = require('mongodb');
 const Monk = require('monk');
 const path = require('path');
+const http = require('http');
+const webpush = require('web-push');
 
 const app = express();
 const publicPath = path.join(__dirname, '..', 'public');
 
+const vapidKeys = webpush.generateVAPIDKeys();
+webpush.setVapidDetails('mailto:sarah.sauseng@gmail.com', vapidKeys.publicKey, vapidKeys.privateKey);
+
 const mongodb = Monk('mongodb://game_fam:GameFam321$@gamefam-shard-00-00-qehpm.mongodb.net:27017,gamefam-shard-00-01-qehpm.mongodb.net:27017,gamefam-shard-00-02-qehpm.mongodb.net:27017/gamefam?ssl=true&replicaSet=gamefam-shard-0&authSource=admin');
 
+app.use(logger('dev'));
 app.use(express.static(publicPath));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.get('/api/available', (req, res) => {
+  res.send(1);
+});
+app.get('/api/push-key', (req, res) => {
+  res.send(vapidKeys.publicKey);
+});
+app.post('/api/push-register', bodyParser.json(), (req, res) => {
+  if (!req.body || !req.body.endpoint) {
+    res.sendStatus(400).send('no body');
+  }
+  setTimeout(() => {
+    webpush.sendNotification(req.body, 'Test Payload');
+  }, 30 * 1000);
+  res.sendStatus(200);
+});
 
 app.get('/api/user/:id/lists', (req, res) => {
   const users = mongodb.get('users');
@@ -31,7 +54,6 @@ app.put('/api/user/:id/list/add', (req, res) => {
   const params = req.body;
   const id = params.user.id;
   const list = params.list;
-  const user = params.user;
   list.users.push(id);
 
   lists.insert(list).then(() => {
@@ -160,8 +182,13 @@ app.get('/api/lists/:id', (req, res) => {
   });
 });
 
-app.listen(3005, () => {
-  console.log('Server listening on port 3005.');
+app.use((req, res) => {
+  res.sendFile(path.join(publicPath, 'index.html'));
+});
+
+const server = http.createServer(app);
+server.listen(3005, () => {
+  console.log(`Server listening on port ${server.address().port}`);
 });
 
 module.exports = app;

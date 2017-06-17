@@ -23,20 +23,22 @@ const styles = {
     fontWeight: '600',
     textTransform: 'capitalize',
     color: '#27c79a',
-    fontSize: '1.3em',
+    fontSize: '1em',
+    margin: 0,
   },
   price: {
-
+    color: '#df8671',
+    width: '100%',
+    margin: 0,
+    fontWeight: '500',
+    fontSize: '1em',
   },
   platform: {
-
+    width: '100%',
+    margin: 0,
+    fontSize: '0.8em',
   },
   text: {
-    width: '100%',
-    textAlign: 'center',
-    float: 'left',
-  },
-  iconWrapper: {
     width: '100%',
     textAlign: 'center',
     float: 'left',
@@ -82,17 +84,19 @@ export default class GameCard extends React.Component {
   render() {
     return (
         <Paper style={styles.element} onClick={this.handleClick}>
-          <div style={ styles.iconWrapper }>
-            <GameIcon style={ styles.icon }/>
-          </div>
           <div style={ styles.text }>
+            <GameIcon style={ styles.icon }/>
               <h2 style={ styles.name }>
                   {this.props.name}
               </h2>
-              <span style={ styles.price }>
+            <p style={ styles.price }>
+              <span>
                   {this.props.price} &euro;
               </span>
-              <span style={ styles.platform }>Platform: {this.props.platform}</span>
+            </p>
+            <p style={ styles.platform }>
+              <span>Platform: {this.props.platform}</span>
+            </p>
           </div>
         </Paper>
     );

@@ -12,6 +12,7 @@ import promiseMiddleware from 'redux-promise-middleware';
 import Home from './Home.jsx';
 import reducer from './reducer/reducers';
 import userReducer from './reducer/userReducers';
+// import './swRegister';
 import './styles.css';
 
 injectTapEventPlugin();

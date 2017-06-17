@@ -57,6 +57,14 @@ export default function reducer(state = {
         ...state,
         addList: action.payload.addList,
         displayLists: action.payload.displayLists,
+        gameForm: action.payload.gameForm,
+      };
+    }
+    case 'SHOW_GAME_FORM': {
+      return {
+        ...state,
+        displayLists: action.payload.displayLists,
+        gameForm: action.payload.gameForm,
       };
     }
     case 'ADD_LIST_FULFILLED': {

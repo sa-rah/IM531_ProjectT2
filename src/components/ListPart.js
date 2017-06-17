@@ -35,6 +35,7 @@ const styles = {
     textAlign: 'center',
     margin: 'auto',
     width: '100%',
+    marginTop: '70px',
   },
   list: {
     paddingLeft: 0,

@@ -51,7 +51,14 @@ export function showLists() {
 export function showGames() {
   return {
     type: 'SHOW_GAMES_FOR_LIST',
-    payload: { addList: false, editList: false, displayLists: false },
+    payload: { addList: false, editList: false, displayLists: false, gameForm: false },
+  };
+}
+
+export function showGameForm() {
+  return {
+    type: 'SHOW_GAME_FORM',
+    payload: { gameForm: true, displayLists: false },
   };
 }
 
@@ -202,7 +209,7 @@ export function loadAllUser() {
 }
 
 export function asyncAdding(data) {
-  return dispatch => new Promise((resolve, reject) => {
+  return dispatch => new Promise((resolve) => {
     dispatch(addToList(data)).then(() => {
       dispatch(loadLists(data.user));
     });
@@ -211,7 +218,7 @@ export function asyncAdding(data) {
 }
 
 export function asyncEditing(data) {
-  return dispatch => new Promise((resolve, reject) => {
+  return dispatch => new Promise((resolve) => {
     dispatch(editUserList(data)).then(() => {
       dispatch(loadLists(data.user));
     });
@@ -220,7 +227,7 @@ export function asyncEditing(data) {
 }
 
 export function asyncDeleting(data) {
-  return dispatch => new Promise((resolve, reject) => {
+  return dispatch => new Promise((resolve) => {
     dispatch(deleteUserList(data)).then(() => {
       dispatch(loadLists(data.user));
     });
@@ -229,7 +236,7 @@ export function asyncDeleting(data) {
 }
 
 export function asyncLoadGamesForList(id) {
-  return dispatch => new Promise((resolve, reject) => {
+  return dispatch => new Promise((resolve) => {
     dispatch(setCurrentList(id)).then(() => {
       dispatch(showGames());
     });
@@ -238,13 +245,12 @@ export function asyncLoadGamesForList(id) {
 }
 
 export function asyncLoadUpdatedGamesForList(data) {
-  return dispatch => new Promise((resolve, reject) => {
+  return dispatch => new Promise((resolve) => {
     if (data.delete) {
       dispatch(deleteGameFromList(data)).then(() => {
         dispatch(asyncLoadGamesForList(data.list._id));
       });
     } else {
-      console.log(data);
       dispatch(addGameToList(data)).then(() => {
         dispatch(asyncLoadGamesForList(data.list._id));
       });

@@ -1,7 +1,7 @@
-const { app, BrowserWindow, globalShortcut, shell, Menu } = require('electron');
+const { app, BrowserWindow, globalShortcut, shell, Menu, protocol, webFrame } = require('electron');
 const path = require('path');
 const url = require('url');
-const ownExpress = require('./server/ownExpress');
+const ownExpress = require('./server/index');
 
 const showDevTools = true;
 
@@ -16,8 +16,8 @@ function createWindow() {
   });
 
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'public', 'index.html'),
-    protocol: 'file:',
+    pathname: 'localhost:3005',
+    protocol: 'http:',
     slashes: true,
   }));
 
@@ -30,12 +30,8 @@ function createWindow() {
   });
 }
 
-
 app.on('ready', () => {
   createWindow();
-  /* globalShortcut.register('CommandOrControl+X', () => {
-    console.log('CommandOrControl+X is pressed');
-  }); */
   const template = [
     {
       label: 'Edit',

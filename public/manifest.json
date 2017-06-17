@@ -1,0 +1,11 @@
+{
+    "name": "gamefam - a app to connect and share games",
+    "short_name": "gamefam",
+    "lang": "de-AT",
+    "orientation": "portrait-primary",
+    "icons": [],
+    "theme_color": "#333e50",
+    "background_color": "#27c79a",
+    "display": "standalone",
+    "start_url": "./"
+}
