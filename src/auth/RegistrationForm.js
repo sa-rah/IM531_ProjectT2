@@ -109,15 +109,24 @@ export default class RegistrationForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    let correctInput = false;
+    const correctInput = [ false, false, false ];
     const mailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    correctInput = mailRegex.test(this.state.mail);
+    const regex = /^[a-zA-Z0-9]+$/;
+    correctInput[0] = regex.test(this.state.name);
+    correctInput[1] = mailRegex.test(this.state.mail);
+    correctInput[2] = regex.test(this.state.pw);
 
-    if (correctInput) {
-      this.props.dispatch(registerUser(this.state));
-    } else {
+    if (!correctInput[0]) {
+      const msg = 'Name is not valid.';
+      this.props.dispatch(setErrorMessage(msg));
+    } else if (!correctInput[1]) {
       const msg = 'Mail is not valid.';
       this.props.dispatch(setErrorMessage(msg));
+    } else if (!correctInput[2]) {
+      const msg = 'Password is not valid.';
+      this.props.dispatch(setErrorMessage(msg));
+    } else {
+      this.props.dispatch(registerUser(this.state));
     }
   }
 
