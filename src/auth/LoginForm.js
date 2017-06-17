@@ -5,7 +5,7 @@ import { RaisedButton as Button, Paper } from 'material-ui';
 import GameFamIcon from 'material-ui/svg-icons/social/pages';
 import { connect } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { loginUser, showRegisterForm } from './auth_actions';
+import { loginUser, showRegisterForm, setErrorMessage } from './auth_actions';
 
 const styles = {
   element: {
@@ -63,6 +63,7 @@ const styles = {
   },
   h4: {
     color: '#df8671',
+    margin: 0,
   },
   icon: {
     width: '50px',
@@ -96,7 +97,7 @@ export default class LoginForm extends React.Component {
     dispatch: PropTypes.func,
     theme: PropTypes.object,
     register: PropTypes.bool,
-    message: PropTypes.string,
+    message: PropTypes.array,
   };
 
   handleChange(event) {
@@ -111,7 +112,27 @@ export default class LoginForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.dispatch(loginUser(this.state));
+    const correctInput = [false, false, false];
+    const regex = /^[a-zA-Z0-9]+$/;
+    const mailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    correctInput[0] = mailRegex.test(this.state.mail);
+    correctInput[1] = regex.test(this.state.pw);
+
+    const msg = [];
+
+    if (!correctInput[0]) {
+      msg.push('Mail is not valid.');
+    }
+
+    if (!correctInput[1]) {
+      msg.push('Password is not valid.');
+    }
+
+    if (msg.length === 0) {
+      this.props.dispatch(loginUser(this.state));
+    } else {
+      this.props.dispatch(setErrorMessage(msg));
+    }
   }
 
   showRegForm() {
@@ -131,7 +152,8 @@ export default class LoginForm extends React.Component {
         </Paper>
         <div style={ styles.formField }>
         <h2 style={ styles.h2 }>Login</h2>
-            { this.props.message ? <h4 style={ styles.h4 }>{ this.props.message }</h4> : null}
+            { this.props.message ? this.props.message.map((item, index) =>
+                <h4 style={ styles.h4 } key={index}> { item }</h4>) : null}
         <form style={ styles.form } onSubmit={this.handleSubmit}>
           <TextField style={ styles.field } id="mail" name="mail" type="text" value={this.state.mail} onChange={this.handleChange} hintText="Your Email"
                      floatingLabelText="Mail"/> <br/>

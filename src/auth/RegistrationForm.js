@@ -16,6 +16,7 @@ const styles = {
     zIndex: 10,
     backgroundColor: '#27c79a',
     bottom: 0,
+    overflow: 'scroll',
   },
   h2: {
     fontSize: '1.4em',
@@ -24,6 +25,7 @@ const styles = {
   },
   h4: {
     color: '#df8671',
+    margin: 0,
   },
   button: {
     width: '100%',
@@ -41,6 +43,7 @@ const styles = {
     width: '60%',
     maxWidth: '300px',
     marginTop: '50px',
+    height: '600px',
   },
   form: {
     width: '100%',
@@ -94,7 +97,7 @@ export default class RegistrationForm extends React.Component {
     dispatch: PropTypes.func,
     theme: PropTypes.object,
     register: PropTypes.bool,
-    message: PropTypes.string,
+    message: PropTypes.array,
   };
 
   handleChange(event) {
@@ -109,24 +112,31 @@ export default class RegistrationForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const correctInput = [ false, false, false ];
+    const correctInput = [false, false, false];
     const mailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const regex = /^[a-zA-Z0-9]+$/;
     correctInput[0] = regex.test(this.state.name);
     correctInput[1] = mailRegex.test(this.state.mail);
     correctInput[2] = regex.test(this.state.pw);
 
+    const msg = [];
+
     if (!correctInput[0]) {
-      const msg = 'Name is not valid.';
-      this.props.dispatch(setErrorMessage(msg));
-    } else if (!correctInput[1]) {
-      const msg = 'Mail is not valid.';
-      this.props.dispatch(setErrorMessage(msg));
-    } else if (!correctInput[2]) {
-      const msg = 'Password is not valid.';
-      this.props.dispatch(setErrorMessage(msg));
-    } else {
+      msg.push('Name is not valid.');
+    }
+
+    if (!correctInput[1]) {
+      msg.push('Mail is not valid.');
+    }
+
+    if (!correctInput[2]) {
+      msg.push('Password is not valid.');
+    }
+
+    if (msg.length === 0) {
       this.props.dispatch(registerUser(this.state));
+    } else {
+      this.props.dispatch(setErrorMessage(msg));
     }
   }
 
@@ -147,7 +157,8 @@ export default class RegistrationForm extends React.Component {
           </Paper>
           <div style={ styles.formField }>
             <h2 style={ styles.h2 }>Register</h2>
-              { this.props.message ? <h4 style={ styles.h4 }>{ this.props.message }</h4> : null}
+              { this.props.message ? this.props.message.map((item, index) =>
+                  <h4 style={ styles.h4 } key={index}> { item }</h4>) : null}
             <form style={ styles.form } onSubmit={this.handleSubmit}>
               <TextField style={ styles.field } id="name" name="name" type="text" value={this.state.name} onChange={this.handleChange} hintText="Your Name"
                          errorText="This field is required"

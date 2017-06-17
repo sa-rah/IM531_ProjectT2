@@ -93,7 +93,7 @@ export function logoutUser() {
         mail: '',
         lists: '',
       },
-      message: '',
+      message: [],
     },
   };
 }

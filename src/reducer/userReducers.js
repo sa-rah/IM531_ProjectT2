@@ -7,7 +7,7 @@ export default function userReducer(state = {
   },
   loggedIn: false,
   register: false,
-  message: '',
+  message: [],
 }, action) {
   switch (action.type) {
     case 'LOGIN_FULFILLED': {
@@ -32,7 +32,7 @@ export default function userReducer(state = {
     case 'LOGIN_REJECTED': {
       return {
         ...state,
-        message: 'Login not possible.',
+        message: ['Login not possible.'],
       };
     }
     case 'LOGOUT': {
@@ -53,21 +53,21 @@ export default function userReducer(state = {
       return {
         ...state,
         register: action.payload.register,
-        message: '',
+        message: [],
       };
     }
     case 'SHOW_LOGIN_FORM': {
       return {
         ...state,
         register: action.payload.register,
-        message: '',
+        message: [],
       };
     }
     case 'REGISTER_USER_FULFILLED': {
       if (typeof action.payload.register === 'undefined') {
         return {
           ...state,
-          message: 'Registration not possible!',
+          message: this.message.push('Registration not possible!'),
           loggedIn: false,
           register: false,
         };
