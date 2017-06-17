@@ -95,7 +95,7 @@ const styles = {
 export default class ListForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', users: [], games: [], dataSource: [], inputValue: '' };
+    this.state = { name: '', users: [], games: [], dataSource: [], inputValue: '', userMails: [] };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -140,21 +140,30 @@ export default class ListForm extends React.Component {
 
   performSearch() {
     if (this.state.inputValue !== '') {
-      const mails = this.props.users.map(user => user.mail);
+      const mails = this.props.users;
+      const ownMail = mails.indexOf(this.props.user.id);
+      if (ownMail !== -1) {
+        mails.splice(ownMail, 1);
+      }
+      const withoutMails = mails.map(user => user.mail);
+      console.log(withoutMails);
       this.setState({
-        dataSource: mails,
+        dataSource: withoutMails,
       });
     }
   }
 
   onSetUser(chosenRequest) {
     const newUsers = this.props.users;
+    const users = this.state.userMails;
     const newUser = newUsers.find(user => user.mail === chosenRequest);
     newUsers.push(newUser);
+    users.push(newUser.mail);
     const stateUsers = this.state.users;
     stateUsers.push(newUser._id);
     this.setState({
       users: stateUsers,
+      userMails: users,
     });
   }
 
@@ -195,10 +204,13 @@ export default class ListForm extends React.Component {
 
   removeUser(item) {
     const updateUsers = this.state.users;
-    const index = updateUsers.indexOf(item);
+    const users = this.state.userMails;
+    const index = users.indexOf(item);
     updateUsers.splice(index, 1);
+    users.splice(index, 1);
     this.setState({
       users: updateUsers,
+      userMails: users,
     });
   }
 
@@ -238,7 +250,7 @@ export default class ListForm extends React.Component {
                               onUpdateInput={this.onUpdateInput} onNewRequest={this.onSetUser}/>
               <span style={styles.span}>Added User: </span>
               <ul style={ styles.list }>
-                  { this.state.users.map((item, index) =>
+                  { this.state.userMails.map((item, index) =>
                       <li key={index}><p style={ styles.user }> {item}</p>
                         <DeleteButton type="remove" value="remove" id={item}
                                       style={ styles.deleteIcon }
