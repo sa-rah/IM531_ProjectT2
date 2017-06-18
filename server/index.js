@@ -152,7 +152,7 @@ app.post('/api/user/add', (req, res) => {
       lists: user.lists,
     };
     res.send(obj);
-  });
+  }).catch(error => res.send(error));
 });
 
 app.get('/api/user/:id', (req, res) => {

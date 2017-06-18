@@ -14,7 +14,7 @@ export default function userReducer(state = {
       if (typeof action.payload.loggedIn === 'undefined') {
         return {
           ...state,
-          message: 'Login not possible!',
+          message: ['Login not possible.'],
           loggedIn: false,
         };
       }
@@ -33,6 +33,12 @@ export default function userReducer(state = {
       return {
         ...state,
         message: ['Login not possible.'],
+      };
+    }
+    case 'LOGIN_PENDING': {
+      return {
+        ...state,
+        message: ['Trying to login...'],
       };
     }
     case 'LOGOUT': {
