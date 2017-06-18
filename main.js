@@ -3,7 +3,7 @@ const path = require('path');
 const url = require('url');
 const ownExpress = require('./server/index');
 
-const showDevTools = true;
+const showDevTools = false;
 
 let win;
 
