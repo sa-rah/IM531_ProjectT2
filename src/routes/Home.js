@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import React from 'react';
 import { Paper } from 'material-ui';
 import UseIcon from 'material-ui/svg-icons/action/question-answer';
