@@ -78,7 +78,8 @@ export default class Home extends React.Component {
           <WhatIcon style={ styles.icon }/>
           <h4 style={ styles.h4 }>What is it?</h4>
           <p style={ styles.p }><span style={ styles.spanAbout }>gamefam </span>
-            is an app that can be used to connect with other gamers and share lists of games with them
+            is an app that can be used to connect with
+            other gamers and share lists of games with them
             that you want to buy/play together.</p>
         </Paper>
         <Paper style={ styles.container }>
