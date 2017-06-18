@@ -1,4 +1,4 @@
-# gamefam
+# IM531_Project T2 - gamefam
 
 ## Idea
 
@@ -19,7 +19,7 @@ For evaluating the Javascript code *ESLint* is used with the recommended setup f
 
 The Node version used is 7.2.0 like stated in the `package.json` file.
 
-The basic folder structure is used as in the lectures. All route components life in the `src/routes` folder. The react components are stored in the folder `components`. Styles are in the `styles.css`, `theme.js` and on top of every component files.
+The basic folder structure is used as in the lectures. All route components life in the `src/routes` folder. The react components are stored in the folder `components`. Styles are in the `styles.css`, `theme.js` and on top of every component file.
 
 There is one file `Home.jsx` used as entry point for the application (beyond the `main.jsx`). It is to differentiate between the authentication- and the app-part. 
 
@@ -30,6 +30,9 @@ The service-worker part is in the files `swRegister.js` & `service-worker.js`. I
 
 There are two stores defined in the application: One for the authentication part and one general. The authentication store file can be found at `src/reducers/userReducers.js`. The general store file can be found at `src/reducers/reducers.js`.
 The backend part can be found in the server file `index.js` in folder `server`. 
+
+The application is not fully available offline, because all the data gets loaded from the db on every request. 
+Also the login does not work if you are offline.
 
 ## Workflow
 
