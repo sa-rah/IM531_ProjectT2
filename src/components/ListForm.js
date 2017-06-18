@@ -146,7 +146,6 @@ export default class ListForm extends React.Component {
         mails.splice(ownMail, 1);
       }
       const withoutMails = mails.map(user => user.mail);
-      console.log(withoutMails);
       this.setState({
         dataSource: withoutMails,
       });

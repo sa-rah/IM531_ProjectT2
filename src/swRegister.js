@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars,no-console */
 if ('serviceWorker' in navigator) {
   let swRegistration = null;
 
