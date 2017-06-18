@@ -13,10 +13,12 @@ import transitions from 'material-ui/styles/transitions';
 import ListIcon from 'material-ui/svg-icons/action/list';
 import ProfileIcon from 'material-ui/svg-icons/social/person';
 import GameFamIcon from 'material-ui/svg-icons/social/pages';
+import HomeIcon from 'material-ui/svg-icons/action/home';
 import MediaBar from './components/MediaBar';
 import Lists from './routes/Lists';
 import Profile from './routes/Profile';
 import About from './routes/About';
+import Home from './routes/Home';
 
 const headerHeight = 160;
 const styles = {
@@ -34,6 +36,13 @@ const styles = {
 };
 
 const routes = [
+  {
+    link: '/',
+    exact: true,
+    title: 'Home',
+    component: Home,
+    icon: <HomeIcon style={ styles.menuItem } />,
+  },
   {
     link: '/about',
     exact: true,

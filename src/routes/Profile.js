@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Paper } from 'material-ui';
+import { Paper, Avatar } from 'material-ui';
 import { connect } from 'react-redux';
+import ProfileIcon from 'material-ui/svg-icons/social/person';
 
 const styles = {
   head: {
@@ -9,10 +10,6 @@ const styles = {
     backgroundColor: '#27c79a',
     padding: '16px',
     height: '70px',
-  },
-  button: {
-    float: 'right',
-    backgroundColor: '#333e50',
   },
   h3: {
     float: 'left',
@@ -25,16 +22,35 @@ const styles = {
     color: '#333e50',
     fontWeight: 'bold',
   },
-  loading: {
-    fill: '#27c79a',
-    color: '#27c79a',
-    textAlign: 'center',
-    margin: 'auto',
-    width: '100%',
+  h4: {
+    textTransform: 'lowercase',
+    letterSpacing: '0.1em',
+    color: '#df8671',
   },
-  list: {
-    paddingLeft: 0,
-    marginTop: 25,
+  spanAbout: {
+    color: '#27c79a',
+    fontWeight: 600,
+  },
+  avatar: {
+    width: '80%',
+    margin: 'auto',
+    marginTop: 50,
+  },
+  container: {
+    margin: 40,
+    marginTop: 50,
+    padding: 25,
+    lineHeight: '1.4em',
+    textAlign: 'center',
+  },
+  avatarIcon: {
+    width: 150,
+    height: 150,
+    marginLeft: 135,
+  },
+  icon: {
+    width: 70,
+    height: 70,
   },
 };
 
@@ -55,6 +71,20 @@ export default class Profile extends React.Component {
               { this.props.user.name }</span>'s Profile
           </h3>
         </Paper>
+      <div style={ styles.avatar }>
+        <Avatar style={ styles.avatarIcon } icon={<ProfileIcon style={ styles.icon } />} />
+      </div>
+      <Paper style={styles.container}>
+        <p>
+          <span style={ styles.spanAbout }>ID:</span><br/> { this.props.user.id }
+        </p>
+        <p>
+          <span style={ styles.spanAbout }>Name:</span><br/> { this.props.user.name }
+        </p>
+        <p>
+          <span style={ styles.spanAbout }>Mail:</span><br/> { this.props.user.mail }
+        </p>
+      </Paper>
     </div>;
   }
 }
