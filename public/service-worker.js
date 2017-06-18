@@ -63,23 +63,12 @@ self.addEventListener('fetch', function (e) {
   }
 });
 
-self.addEventListener('push', function (event) {
-  console.log(`[Service Worker] Push received. Data: "${event.data.text()}"`);
-  const title = 'gamefam';
-  const options = {
-    body: 'Yay it works.',
-    icon: '',
-  };
-
-  event.waitUntil(self.registration.showNotification(title, options));
-});
-
 self.addEventListener('sync', function (event) {
   console.log('[Service Worker] Sync event!');
 
   const title = 'gamefam';
   const options = {
-    body: 'We are online again!',
+    body: '',
     icon: '',
   };
 
