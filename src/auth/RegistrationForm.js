@@ -115,7 +115,7 @@ export default class RegistrationForm extends React.Component {
     event.preventDefault();
     const correctInput = [false, false, false];
     const mailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const regex = /^[a-zA-Z0-9]+$/;
+    const regex = /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/;
     correctInput[0] = regex.test(this.state.name);
     correctInput[1] = mailRegex.test(this.state.mail);
     correctInput[2] = regex.test(this.state.pw);
@@ -168,7 +168,7 @@ export default class RegistrationForm extends React.Component {
                            errorText="This field is required"
                            floatingLabelText="Mail"/> <br/>
                 <TextField style={ styles.field } id="pw" name="pw" type="password" value={this.state.pw} onChange={this.handleChange} hintText="Your Password"
-                           errorText="This field is required"
+                           errorText="This field is required. Only letters and numbers allowed."
                            floatingLabelText="Password"/> <br/>
                 <Button style={styles.button} type="submit" value="Submit" label="Register" />
             </form>

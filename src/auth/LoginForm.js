@@ -114,7 +114,7 @@ export default class LoginForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const correctInput = [false, false, false];
-    const regex = /^[a-zA-Z0-9]+$/;
+    const regex = /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/;
     const mailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     correctInput[0] = mailRegex.test(this.state.mail);
     correctInput[1] = regex.test(this.state.pw);
