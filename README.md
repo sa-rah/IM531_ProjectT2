@@ -39,6 +39,8 @@ Also the login does not work if you are offline.
 The workflow needs electron and one server to run. Both can be started simultaneously by running `npm start`.
 The project then gets automatically opened in an electron window or you can open `http://localhost:3005/` in the Browser.
 
+Before you start it, you have to run `npm install`.
+
 ## Database
 
 The data is stored using **MongoDB**. The database lives in the cloud at [cloud.mongodb.com](https://cloud.mongodb.com).
