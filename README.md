@@ -45,15 +45,3 @@ Before you start it, you have to run `npm install`.
 
 The data is stored using **MongoDB**. The database lives in the cloud at [cloud.mongodb.com](https://cloud.mongodb.com).
 
-## To be continued...
-
-There are plenty things I still want to do in this project. 
-
-For the authentication part there should be a better form handling, error handling and data encryption.
-
-For the lists part there is still a bug that loads added user not correctly when editing a list and the mail of the user logged in can be chosen.
-
-For the games part the idea is to add a autocomplete button for suggesting several games to the user.
-
-And of course the push-notifications that inform all users about changes in their lists.
-
